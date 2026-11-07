@@ -11,6 +11,7 @@
             --primary: #38bdf8;
             --primary-glow: rgba(56, 189, 248, 0.15);
             --success: #10b981;
+            --success-glow: rgba(16, 185, 129, 0.15);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --input-bg: #0f172a;
@@ -30,7 +31,7 @@
 
         .dashboard {
             width: 100%;
-            max-width: 680px;
+            max-width: 960px;
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 20px;
@@ -39,8 +40,21 @@
         }
 
         .header { text-align: center; margin-bottom: 24px; }
-        .header h2 { margin: 0; font-size: 1.5rem; color: var(--primary); font-weight: 800; }
+        .header h2 { margin: 0; font-size: 1.6rem; color: var(--primary); font-weight: 800; }
         .header p { margin: 6px 0 0 0; font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Two Column Master Layout */
+        .master-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .master-grid {
+                grid-template-columns: 1fr;
+            }
+        }
 
         .section-label {
             font-size: 0.75rem;
@@ -48,15 +62,15 @@
             letter-spacing: 0.08em;
             color: var(--primary);
             font-weight: 700;
-            margin: 20px 0 10px 0;
+            margin: 16px 0 8px 0;
         }
 
-        .form-group { margin-bottom: 14px; }
+        .form-group { margin-bottom: 12px; }
         label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 6px; color: var(--text-main); }
         
         input, select {
             width: 100%;
-            padding: 12px 14px;
+            padding: 11px 14px;
             font-size: 0.95rem;
             border: 1px solid var(--card-border);
             border-radius: 10px;
@@ -69,32 +83,67 @@
         .grid-2 { display: flex; gap: 12px; }
         .grid-2 > div { flex: 1; min-width: 0; }
 
-        .spec-badge {
-            background: rgba(56, 189, 248, 0.08);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            border-radius: 10px;
-            padding: 12px 14px;
-            margin: 16px 0;
-            font-size: 0.84rem;
-            line-height: 1.5;
-            color: #7dd3fc;
+        /* Vehicle Preview Card */
+        .car-visual-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 14px;
         }
 
-        .metrics-card {
+        .car-icon-box {
+            width: 52px;
+            height: 52px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .car-icon-box svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--primary);
+        }
+
+        .car-preview-details {
+            font-size: 0.82rem;
+            line-height: 1.4;
+            color: var(--text-muted);
+        }
+
+        .car-preview-details strong {
+            color: var(--text-main);
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* Right Column Dashboard Panel */
+        .panel-right {
             background: #0f172a;
             border: 1px solid var(--card-border);
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 20px;
-            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .metric-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
+            padding: 7px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.9rem;
+            font-size: 0.88rem;
         }
         .metric-row span { color: var(--text-muted); }
         .metric-row strong { color: var(--text-main); font-weight: 700; }
@@ -103,23 +152,23 @@
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
             border: 1px solid rgba(16, 185, 129, 0.3);
             border-radius: 12px;
-            padding: 18px;
-            margin-top: 18px;
+            padding: 16px;
+            margin-top: 14px;
             text-align: center;
         }
-        .hero-savings small { color: var(--success); font-weight: 700; text-transform: uppercase; font-size: 0.75rem; }
-        .hero-savings .amount { display: block; font-size: 1.8rem; font-weight: 800; color: var(--success); margin-top: 4px; }
+        .hero-savings small { color: var(--success); font-weight: 700; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em; }
+        .hero-savings .amount { display: block; font-size: 1.6rem; font-weight: 800; color: var(--success); margin-top: 4px; }
 
-        .visual-horizon { margin-top: 18px; display: flex; flex-direction: column; gap: 12px; }
-        .horizon-item { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; padding: 10px 12px; }
-        .horizon-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.84rem; margin-bottom: 6px; }
+        .visual-horizon { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+        .horizon-item { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 8px 10px; }
+        .horizon-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; margin-bottom: 4px; }
         .horizon-title { font-weight: 700; color: var(--text-main); }
-        .horizon-badge { background: rgba(16, 185, 129, 0.2); color: var(--success); font-size: 0.72rem; padding: 2px 8px; border-radius: 12px; font-weight: 600; }
+        .horizon-badge { background: rgba(16, 185, 129, 0.2); color: var(--success); font-size: 0.68rem; padding: 1px 6px; border-radius: 10px; font-weight: 600; }
         .horizon-value { font-weight: 800; color: var(--success); }
-        .progress-track { height: 10px; background: #1e293b; border-radius: 5px; overflow: hidden; width: 100%; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, #10b981 0%, #34d399 100%); border-radius: 5px; }
+        .progress-track { height: 8px; background: #1e293b; border-radius: 4px; overflow: hidden; width: 100%; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #10b981 0%, #34d399 100%); border-radius: 4px; }
 
-        hr { border: 0; border-top: 1px solid var(--card-border); margin: 20px 0; }
+        hr { border: 0; border-top: 1px solid var(--card-border); margin: 16px 0; }
     </style>
 </head>
 <body>
@@ -127,57 +176,75 @@
 <div class="dashboard">
     <div class="header">
         <h2>⚡ EV vs. Fuel Cost Analytics</h2>
-        <p>Automated Tamil Nadu TANGEDCO Domestic Tariff Calculator</p>
+        <p>Tamil Nadu TANGEDCO Domestic LT-1A Tariff Calculator</p>
     </div>
 
-    <div class="section-label">1. Usage & Operational Parameters</div>
-    <div class="form-group">
-        <label>Monthly Distance Travelled (km)</label>
-        <input type="number" id="monthlyKm" value="1500" oninput="runCalculation()">
-    </div>
+    <div class="master-grid">
+        <!-- Left Column: Inputs & Vehicle Config -->
+        <div>
+            <div class="section-label" style="margin-top:0;">1. Usage Parameters</div>
+            <div class="form-group">
+                <label>Monthly Distance Travelled (km)</label>
+                <input type="number" id="monthlyKm" value="1500" oninput="runCalculation()">
+            </div>
 
-    <div class="grid-2">
-        <div class="form-group">
-            <label>Fuel Price (₹ / Litre)</label>
-            <input type="number" id="fuelPrice" value="102" oninput="runCalculation()">
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Fuel Price (₹ / L)</label>
+                    <input type="number" id="fuelPrice" value="102" oninput="runCalculation()">
+                </div>
+                <div class="form-group">
+                    <label>Fuel Mileage (km / L)</label>
+                    <input type="number" id="fuelMileage" value="14" oninput="runCalculation()">
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="section-label">2. Vehicle Configuration</div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>EV Manufacturer</label>
+                    <select id="brandSelect" onchange="updateSubModels()"></select>
+                </div>
+                <div class="form-group">
+                    <label>Model Variant</label>
+                    <select id="modelSelect" onchange="runCalculation()"></select>
+                </div>
+            </div>
+
+            <!-- Vehicle Preview Card -->
+            <div class="car-visual-card">
+                <div class="car-icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.04 3H5.81l1.04-3zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                </div>
+                <div class="car-preview-details" id="specInfo">
+                    Loading vehicle specs...
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label>Fuel Mileage (km / Litre)</label>
-            <input type="number" id="fuelMileage" value="14" oninput="runCalculation()">
+
+        <!-- Right Column: Financial Breakdown & 5-Year Horizon Chart -->
+        <div class="panel-right">
+            <div>
+                <div class="section-label" style="margin-top:0;">Monthly Operational Breakdown</div>
+                
+                <div class="metric-row"><span>Electricity Needed:</span><strong id="monthlyUnits">0 kWh</strong></div>
+                <div class="metric-row"><span>Effective TN Rate:</span><strong id="dynamicRate">₹0.00 / unit</strong></div>
+                <div class="metric-row"><span>EV Charging Cost:</span><strong id="evCost">₹0</strong></div>
+                <div class="metric-row"><span>ICE Fuel Cost:</span><strong id="fuelCost">₹0</strong></div>
+
+                <div class="hero-savings">
+                    <small>Estimated Net Annual Savings</small>
+                    <span class="amount" id="yearlySavings">₹0</span>
+                </div>
+            </div>
+
+            <div>
+                <div class="section-label" style="margin-bottom: 6px;">5-Year Savings Horizon</div>
+                <div class="visual-horizon" id="visualHorizon"></div>
+            </div>
         </div>
-    </div>
-
-    <hr>
-
-    <div class="section-label">2. Vehicle Configuration</div>
-    <div class="grid-2">
-        <div class="form-group">
-            <label>EV Manufacturer</label>
-            <select id="brandSelect" onchange="updateSubModels()"></select>
-        </div>
-        <div class="form-group">
-            <label>Model & Sub-Variant</label>
-            <select id="modelSelect" onchange="runCalculation()"></select>
-        </div>
-    </div>
-
-    <div class="spec-badge" id="specInfo">Loading vehicle database...</div>
-
-    <div class="metrics-card">
-        <div class="section-label" style="margin-top:0; color: var(--text-muted);">Monthly Expenditure Comparison</div>
-        
-        <div class="metric-row"><span>Electricity Consumption:</span><strong id="monthlyUnits">0 kWh</strong></div>
-        <div class="metric-row"><span>Effective TN Tariff Bracket:</span><strong id="dynamicRate">₹0.00 / unit</strong></div>
-        <div class="metric-row"><span>EV Monthly Charging Cost:</span><strong id="evCost">₹0</strong></div>
-        <div class="metric-row"><span>ICE Fuel Monthly Cost:</span><strong id="fuelCost">₹0</strong></div>
-
-        <div class="hero-savings">
-            <small>Estimated Net Annual Savings</small>
-            <span class="amount" id="yearlySavings">₹0</span>
-        </div>
-
-        <div class="section-label" style="margin-top:20px; color: var(--text-muted);">Cumulative Savings Horizon (5-Year Projection)</div>
-        <div class="visual-horizon" id="visualHorizon"></div>
     </div>
 </div>
 
@@ -336,9 +403,9 @@ function runCalculation() {
     var kwhPerKm = selectedCar.battery / selectedCar.range;
 
     document.getElementById('specInfo').innerHTML = 
-        '<strong>' + selectedCar.model + ' Specs:</strong><br>' +
-        '• Usable Battery: <strong>' + selectedCar.battery + ' kWh</strong> | Range: <strong>~' + selectedCar.range + ' km</strong><br>' +
-        '• Vehicle Consumption: <strong>~' + (kwhPerKm * 100).toFixed(1) + ' kWh / 100 km</strong>';
+        '<strong>' + selectedCar.model + '</strong><br>' +
+        'Battery: ' + selectedCar.battery + ' kWh | Range: ~' + selectedCar.range + ' km<br>' +
+        'Energy: ~' + (kwhPerKm * 100).toFixed(1) + ' kWh / 100 km';
 
     var monthlyKwhNeeded = monthlyKm * kwhPerKm;
     var evMonthlyCost = calculateTNTariffMonthlyBill(monthlyKwhNeeded);
@@ -364,7 +431,7 @@ function runCalculation() {
 
     var maxTarget = Math.max(annualNetSavings * 5, 1);
     var horizonHtml = '';
-    var milestones = ["Payback Period", "Break-Even Margin", "Capital Accumulation", "Asset Savings", "5-Year Cumulative Net"];
+    var milestones = ["Year 1 Recovery", "Year 2 Growth", "Year 3 Horizon", "Year 4 Scale", "Year 5 Milestone"];
 
     for (var year = 1; year <= 5; year++) {
         var totalSavings = annualNetSavings * year;
@@ -374,7 +441,7 @@ function runCalculation() {
         horizonHtml += 
             '<div class="horizon-item">' +
                 '<div class="horizon-header">' +
-                    '<div><span class="horizon-title">Year ' + year + '</span> &nbsp;<span class="horizon-badge">' + milestones[year - 1] + '</span></div>' +
+                    '<div><span class="horizon-title">Yr ' + year + '</span> &nbsp;<span class="horizon-badge">' + milestones[year - 1] + '</span></div>' +
                     '<span class="horizon-value">' + formattedSavings + '</span>' +
                 '</div>' +
                 '<div class="progress-track">' +
@@ -385,7 +452,6 @@ function runCalculation() {
     document.getElementById('visualHorizon').innerHTML = horizonHtml;
 }
 
-// Immediate execution trigger
 initApp();
 </script>
 
