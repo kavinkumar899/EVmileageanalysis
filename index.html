@@ -9,11 +9,16 @@
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --primary: #2563eb;
-            --primary-dark: #1d4ed8;
             --success: #16a34a;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border-color: #cbd5e1;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #94a3b8;
+        }
+
+        /* Prevent mobile dark mode from rendering text invisible */
+        * {
+            box-sizing: border-box;
+            color-scheme: light;
         }
 
         body {
@@ -21,42 +26,392 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 16px;
         }
 
         .container {
-            max-width: 620px;
+            max-width: 600px;
             margin: 0 auto;
             background: var(--card-bg);
-            padding: 28px;
+            padding: 24px;
             border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
-            box-sizing: border-box;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
             margin-top: 0;
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--primary);
             font-weight: 700;
         }
 
         .section-title {
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
-            margin: 24px 0 12px 0;
+            margin: 20px 0 10px 0;
             font-weight: 700;
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         label {
             display: block;
             font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom
+            margin-bottom: 6px;
+            color: #1e293b;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            display: block;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB6%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px top 50%;
+            background-size: 12px auto;
+            padding-right: 32px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .grid-2 {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .grid-2 > div {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .spec-badge {
+            background-color: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 12px 14px;
+            margin: 16px 0;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: #1e3a8a;
+        }
+
+        .output-card {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 24px;
+        }
+
+        .output-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .highlight-box {
+            background: #f0fdf4;
+            border: 1px solid #b7ebc9;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        .highlight-box small {
+            color: #15803d;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        .highlight-box span {
+            display: block;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--success);
+            margin-top: 4px;
+        }
+
+        .savings-table {
+            width: 100%;
+            margin-top: 16px;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #cbd5e1;
+        }
+
+        .savings-table th, .savings-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            color: #0f172a;
+        }
+
+        .savings-table th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #cbd5e1;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>⚡ EV vs. Fuel Cost & Savings Calculator</h2>
+
+    <div class="section-title">1. Driving & Fuel Inputs</div>
+    <div class="form-group">
+        <label>Monthly Driving Distance (km)</label>
+        <input type="number" id="monthlyKm" value="1500" oninput="calculate()">
+    </div>
+
+    <div class="grid-2">
+        <div class="form-group">
+            <label>Fuel Price (₹ / Litre)</label>
+            <input type="number" id="fuelPrice" value="102" oninput="calculate()">
+        </div>
+        <div class="form-group">
+            <label>Fuel Mileage (km / L)</label>
+            <input type="number" id="fuelMileage" value="14" oninput="calculate()">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Electricity Rate (₹ / kWh)</label>
+        <input type="number" id="elecTariff" value="7.5" oninput="calculate()">
+    </div>
+
+    <hr>
+
+    <div class="section-title">2. Select EV Model</div>
+    <div class="grid-2">
+        <div class="form-group">
+            <label>EV Brand</label>
+            <select id="brandSelect" onchange="populateSubModels()"></select>
+        </div>
+        <div class="form-group">
+            <label>Sub-Model Variant</label>
+            <select id="modelSelect" onchange="calculate()"></select>
+        </div>
+    </div>
+
+    <div class="spec-badge" id="specInfo">
+        Loading vehicle specs...
+    </div>
+
+    <!-- Output Section -->
+    <div class="output-card">
+        <div class="section-title" style="margin-top:0;">Monthly Operational Breakdown</div>
+        <div class="output-row">
+            <span>Electricity Needed (Monthly):</span>
+            <strong id="monthlyUnits">0 kWh</strong>
+        </div>
+        <div class="output-row">
+            <span>EV Monthly Cost:</span>
+            <strong id="evCost">₹0</strong>
+        </div>
+        <div class="output-row">
+            <span>Fuel Monthly Cost:</span>
+            <strong id="fuelCost">₹0</strong>
+        </div>
+        
+        <div class="highlight-box">
+            <small>Estimated Net Yearly Savings</small>
+            <span id="yearlySavings">₹0</span>
+        </div>
+
+        <div class="section-title">Cumulative Year-Wise Savings Horizon</div>
+        <table class="savings-table" id="yearlyTable">
+            <thead>
+                <tr>
+                    <th>Timeline</th>
+                    <th>Total Savings</th>
+                    <th>Milestone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Injected via JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+const evDatabase = {
+    "Mahindra": [
+        { model: "BE 6e (59 kWh)", battery: 59.0, range: 420 },
+        { model: "BE 6e (79 kWh)", battery: 79.0, range: 530 },
+        { model: "XEV 9e (59 kWh)", battery: 59.0, range: 410 },
+        { model: "XEV 9e (79 kWh)", battery: 79.0, range: 520 },
+        { model: "XUV400 (34.5 kWh)", battery: 34.5, range: 250 },
+        { model: "XUV400 (39.4 kWh)", battery: 39.4, range: 285 }
+    ],
+    "Tata Motors": [
+        { model: "Tiago EV (19.2 kWh)", battery: 19.2, range: 170 },
+        { model: "Tiago EV (24 kWh)", battery: 24.0, range: 215 },
+        { model: "Punch EV (30 kWh)", battery: 30.0, range: 260 },
+        { model: "Punch EV (40 kWh)", battery: 40.0, range: 330 },
+        { model: "Nexon EV (30 kWh)", battery: 30.0, range: 240 },
+        { model: "Nexon EV (45 kWh)", battery: 45.0, range: 350 },
+        { model: "Curvv EV (45 kWh)", battery: 45.0, range: 340 },
+        { model: "Curvv EV (55 kWh)", battery: 55.0, range: 410 },
+        { model: "Harrier EV (65 kWh)", battery: 65.0, range: 450 }
+    ],
+    "Maruti Suzuki": [
+        { model: "e Vitara (49 kWh)", battery: 49.0, range: 340 },
+        { model: "e Vitara (61 kWh)", battery: 61.0, range: 420 }
+    ],
+    "MG Motor": [
+        { model: "Comet EV (17.3 kWh)", battery: 17.3, range: 160 },
+        { model: "Windsor EV (38 kWh)", battery: 38.0, range: 270 },
+        { model: "Windsor EV (52.9 kWh)", battery: 52.9, range: 380 },
+        { model: "ZS EV (50.3 kWh)", battery: 50.3, range: 340 }
+    ],
+    "Hyundai": [
+        { model: "Creta Electric (42 kWh)", battery: 42.0, range: 310 },
+        { model: "Creta Electric (51.4 kWh)", battery: 51.4, range: 380 },
+        { model: "Ioniq 5 (72.6 kWh)", battery: 72.6, range: 450 }
+    ],
+    "Kia": [
+        { model: "Syros EV (42 kWh)", battery: 42.0, range: 310 },
+        { model: "Syros EV (51.4 kWh)", battery: 51.4, range: 390 },
+        { model: "EV6 (84 kWh)", battery: 84.0, range: 500 }
+    ],
+    "BYD": [
+        { model: "Atto 3 (49.9 kWh)", battery: 49.9, range: 340 },
+        { model: "Atto 3 (60.48 kWh)", battery: 60.48, range: 410 },
+        { model: "Seal (61.4 kWh)", battery: 61.4, range: 430 },
+        { model: "Seal (82.56 kWh)", battery: 82.56, range: 540 }
+    ],
+    "Custom / Other": [
+        { model: "Enter Custom Specs Manually", battery: 0, range: 0 }
+    ]
+};
+
+function initApp() {
+    const brandSelect = document.getElementById('brandSelect');
+    brandSelect.innerHTML = '';
+    
+    for (let brand in evDatabase) {
+        let opt = document.createElement('option');
+        opt.value = brand;
+        opt.textContent = brand;
+        brandSelect.appendChild(opt);
+    }
+    populateSubModels();
+}
+
+function populateSubModels() {
+    const brand = document.getElementById('brandSelect').value;
+    const modelSelect = document.getElementById('modelSelect');
+    modelSelect.innerHTML = '';
+
+    evDatabase[brand].forEach((car, index) => {
+        let opt = document.createElement('option');
+        opt.value = index;
+        opt.textContent = car.model;
+        modelSelect.appendChild(opt);
+    });
+
+    calculate();
+}
+
+function calculate() {
+    const km = parseFloat(document.getElementById('monthlyKm').value) || 0;
+    const fuelPrice = parseFloat(document.getElementById('fuelPrice').value) || 0;
+    const fuelMileage = parseFloat(document.getElementById('fuelMileage').value) || 1;
+    const elecTariff = parseFloat(document.getElementById('elecTariff').value) || 0;
+
+    const selectedBrand = document.getElementById('brandSelect').value;
+    const selectedModelIndex = document.getElementById('modelSelect').value;
+    let car = evDatabase[selectedBrand][selectedModelIndex];
+
+    if (!car) return;
+
+    if (selectedBrand === "Custom / Other") {
+        let userBattery = parseFloat(prompt("Enter EV Battery Size (kWh):", "40")) || 40;
+        let userRange = parseFloat(prompt("Enter Expected Real-World Range (km):", "300")) || 300;
+        car = { model: "Custom Vehicle", battery: userBattery, range: userRange };
+    }
+
+    const evEfficiencyKwhPerKm = car.battery / car.range;
+    
+    document.getElementById('specInfo').innerHTML = `
+        <strong>Selected: ${car.model}</strong><br>
+        • Battery Pack: <strong>${car.battery} kWh</strong> | Real Range: <strong>~${car.range} km</strong><br>
+        • Energy Rate: ~<strong>${(evEfficiencyKwhPerKm * 100).toFixed(1)} kWh / 100 km</strong>
+    `;
+
+    const monthlyUnitsNeeded = km * evEfficiencyKwhPerKm;
+    const monthlyEvCost = monthlyUnitsNeeded * elecTariff;
+    const monthlyFuelCost = (km / fuelMileage) * fuelPrice;
+
+    const monthlySavings = monthlyFuelCost - monthlyEvCost;
+    const yearlySavings = monthlySavings * 12;
+
+    document.getElementById('monthlyUnits').textContent = `${monthlyUnitsNeeded.toFixed(1)} kWh`;
+    document.getElementById('evCost').textContent = `₹${Math.round(monthlyEvCost).toLocaleString('en-IN')}`;
+    document.getElementById('fuelCost').textContent = `₹${Math.round(monthlyFuelCost).toLocaleString('en-IN')}`;
+    
+    const savingsElement = document.getElementById('yearlySavings');
+    if (yearlySavings >= 0) {
+        savingsElement.style.color = "var(--success)";
+        savingsElement.textContent = `₹${Math.round(yearlySavings).toLocaleString('en-IN')}`;
+    } else {
+        savingsElement.style.color = "#dc2626";
+        savingsElement.textContent = `- ₹${Math.round(Math.abs(yearlySavings)).toLocaleString('en-IN')}`;
+    }
+
+    let tableBody = "";
+    for (let year = 1; year <= 5; year++) {
+        let cumulative = yearlySavings * year;
+        let formattedCumulative = cumulative >= 0 ? `₹${Math.round(cumulative).toLocaleString('en-IN')}` : `- ₹${Math.round(Math.abs(cumulative)).toLocaleString('en-IN')}`;
+        let milestone = year === 1 ? "1st Year Recovery" : year === 3 ? "Medium-Term Savings" : year === 5 ? "5-Year Total Milestone" : "Steady Accumulation";
+        
+        tableBody += `
+            <tr>
+                <td><strong>Year ${year}</strong></td>
+                <td style="color: ${cumulative >= 0 ? 'var(--success)' : '#dc2626'}; font-weight: 600;">${formattedCumulative}</td>
+                <td style="color: var(--text-muted);">${milestone}</td>
+            </tr>
+        `;
+    }
+    document.getElementById('yearlyTable').querySelector('tbody').innerHTML = tableBody;
+}
+
+window.onload = initApp;
+</script>
+
+</body>
+</html>
