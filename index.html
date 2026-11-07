@@ -6,52 +6,71 @@
     <title>EV vs Fuel Cost & Savings Calculator</title>
     <style>
         :root {
-            --bg-color: #f4f6f9;
+            --bg-color: #f8fafc;
             --card-bg: #ffffff;
-            --primary: #1a56db;
-            --success: #0d8a4e;
-            --text-main: #222222;
-            --border-color: #dcdfe6;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --success: #16a34a;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 16px;
+            padding: 20px;
         }
         .container {
-            max-width: 520px;
+            max-width: 600px;
             margin: 0 auto;
             background: var(--card-bg);
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
             box-sizing: border-box;
         }
         h2 {
             margin-top: 0;
             text-align: center;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             color: var(--primary);
+            font-weight: 700;
+        }
+        .section-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin: 20px 0 10px 0;
+            font-weight: 700;
         }
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
         label {
             display: block;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
+            color: #334155;
         }
         input, select {
             width: 100%;
-            padding: 10px 12px;
-            font-size: 1rem;
+            padding: 10px 14px;
+            font-size: 0.95rem;
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: 8px;
             box-sizing: border-box;
             background: #fff;
+            color: var(--text-main);
+            transition: border-color 0.2s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
         .grid-2 {
             display: grid;
@@ -59,52 +78,86 @@
             gap: 12px;
         }
         .spec-badge {
-            background-color: #f0f4ff;
+            background-color: #eff6ff;
             border-left: 4px solid var(--primary);
-            padding: 10px 12px;
-            margin-top: 8px;
-            border-radius: 4px;
-            font-size: 0.85rem;
+            padding: 12px 14px;
+            margin-top: 12px;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: #1e3a8a;
         }
         .output-card {
-            background: #eef2f7;
-            padding: 16px;
-            border-radius: 8px;
-            margin-top: 20px;
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 24px;
         }
         .output-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-size: 0.95rem;
         }
         .highlight-box {
-            background: #e6f7ed;
-            border: 1px solid #b7ebc9;
-            padding: 12px;
-            border-radius: 6px;
-            margin-top: 12px;
+            background: #f0fdf4;
+            border: 1px solid #dcfce7;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 16px;
             text-align: center;
+        }
+        .highlight-box small {
+            color: #15803d;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            font-size: 0.75rem;
         }
         .highlight-box span {
             display: block;
-            font-size: 1.25rem;
-            font-weight: 700;
+            font-size: 1.6rem;
+            font-weight: 800;
             color: var(--success);
+            margin-top: 4px;
+        }
+        /* Year-wise table layout */
+        .savings-table {
+            width: 100%;
+            margin-top: 16px;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        .savings-table th, .savings-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .savings-table th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        .savings-table tr:last-child td {
+            border-bottom: none;
         }
         hr {
             border: 0;
             border-top: 1px solid var(--border-color);
-            margin: 12px 0;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>⚡ EV vs Fuel Cost & Savings Calculator</h2>
+    <h2>⚡ EV vs. Fuel Total Cost & Savings Analyzer</h2>
 
-    <!-- Distance & Tariff Inputs -->
+    <div class="section-title">1. Driving & Fuel Inputs</div>
     <div class="form-group">
         <label>Monthly Driving Distance (km)</label>
         <input type="number" id="monthlyKm" value="1500" oninput="calculate()">
@@ -116,184 +169,3 @@
             <input type="number" id="fuelPrice" value="102" oninput="calculate()">
         </div>
         <div class="form-group">
-            <label>Fuel Mileage (km / L)</label>
-            <input type="number" id="fuelMileage" value="15" oninput="calculate()">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Electricity Rate (₹ / kWh)</label>
-        <input type="number" id="elecTariff" value="7.5" oninput="calculate()">
-    </div>
-
-    <hr>
-
-    <!-- EV Car Dropdown Selection -->
-    <div class="grid-2">
-        <div class="form-group">
-            <label>EV Brand</label>
-            <select id="brandSelect" onchange="populateSubModels()"></select>
-        </div>
-        <div class="form-group">
-            <label>Sub-Model Variant</label>
-            <select id="modelSelect" onchange="calculate()"></select>
-        </div>
-    </div>
-
-    <!-- EV Specs Display -->
-    <div class="spec-badge" id="specInfo">
-        Select a car model to view specs...
-    </div>
-
-    <!-- Output Section -->
-    <div class="output-card">
-        <div class="output-row">
-            <span>Electricity Needed (Monthly):</span>
-            <strong id="monthlyUnits">0 kWh</strong>
-        </div>
-        <div class="output-row">
-            <span>EV Monthly Cost:</span>
-            <strong id="evCost">₹0</strong>
-        </div>
-        <div class="output-row">
-            <span>Fuel Monthly Cost:</span>
-            <strong id="fuelCost">₹0</strong>
-        </div>
-        
-        <div class="highlight-box">
-            Projected Yearly Savings with EV
-            <span id="yearlySavings">₹0</span>
-        </div>
-    </div>
-</div>
-
-<script>
-// Database of popular Indian EV Brands, Sub-models, Battery size (kWh), and Real-World Range (km)
-const evDatabase = {
-    "Tata Motors": [
-        { model: "Tiago EV (Medium Range 19.2 kWh)", battery: 19.2, range: 170 },
-        { model: "Tiago EV (Long Range 24 kWh)", battery: 24.0, range: 215 },
-        { model: "Punch EV (30 kWh)", battery: 30.0, range: 260 },
-        { model: "Punch EV (40 kWh)", battery: 40.0, range: 330 },
-        { model: "Nexon EV (30 kWh)", battery: 30.0, range: 240 },
-        { model: "Nexon EV (45 kWh)", battery: 45.0, range: 350 },
-        { model: "Curvv EV (45 kWh)", battery: 45.0, range: 340 },
-        { model: "Curvv EV (55 kWh)", battery: 55.0, range: 410 }
-    ],
-    "MG Motor": [
-        { model: "Comet EV (17.3 kWh)", battery: 17.3, range: 160 },
-        { model: "Windsor EV (38 kWh)", battery: 38.0, range: 270 },
-        { model: "Windsor EV (52.9 kWh)", battery: 52.9, range: 380 },
-        { model: "ZS EV (50.3 kWh)", battery: 50.3, range: 340 }
-    ],
-    "Mahindra": [
-        { model: "XUV400 (34.5 kWh)", battery: 34.5, range: 250 },
-        { model: "XUV400 (39.4 kWh)", battery: 39.4, range: 285 },
-        { model: "BE 6e (59 kWh)", battery: 59.0, range: 420 },
-        { model: "XEV 9e (79 kWh)", battery: 79.0, range: 530 }
-    ],
-    "Hyundai": [
-        { model: "Creta Electric (42 kWh)", battery: 42.0, range: 310 },
-        { model: "Creta Electric (51.4 kWh)", battery: 51.4, range: 380 },
-        { model: "Ioniq 5 (72.6 kWh)", battery: 72.6, range: 450 }
-    ],
-    "Kia": [
-        { model: "Syros EV (42 kWh)", battery: 42.0, range: 310 },
-        { model: "Syros EV (51.4 kWh)", battery: 51.4, range: 390 },
-        { model: "EV6 (84 kWh)", battery: 84.0, range: 500 }
-    ],
-    "BYD": [
-        { model: "Atto 3 (49.9 kWh)", battery: 49.9, range: 340 },
-        { model: "Atto 3 (60.48 kWh)", battery: 60.48, range: 410 },
-        { model: "Seal (61.4 kWh)", battery: 61.4, range: 430 },
-        { model: "Seal (82.56 kWh)", battery: 82.56, range: 540 }
-    ]
-};
-
-// Initialize Brand Dropdown
-function initApp() {
-    const brandSelect = document.getElementById('brandSelect');
-    brandSelect.innerHTML = '';
-    
-    for (let brand in evDatabase) {
-        let opt = document.createElement('option');
-        opt.value = brand;
-        opt.textContent = brand;
-        brandSelect.appendChild(opt);
-    }
-    populateSubModels();
-}
-
-// Populate Variant Sub-Models based on selected Brand
-function populateSubModels() {
-    const brand = document.getElementById('brandSelect').value;
-    const modelSelect = document.getElementById('modelSelect');
-    modelSelect.innerHTML = '';
-
-    evDatabase[brand].forEach((car, index) => {
-        let opt = document.createElement('option');
-        opt.value = index;
-        opt.textContent = car.model;
-        modelSelect.appendChild(opt);
-    });
-
-    calculate();
-}
-
-// Perform Main Calculations
-function calculate() {
-    const km = parseFloat(document.getElementById('monthlyKm').value) || 0;
-    const fuelPrice = parseFloat(document.getElementById('fuelPrice').value) || 0;
-    const fuelMileage = parseFloat(document.getElementById('fuelMileage').value) || 1;
-    const elecTariff = parseFloat(document.getElementById('elecTariff').value) || 0;
-
-    const selectedBrand = document.getElementById('brandSelect').value;
-    const selectedModelIndex = document.getElementById('modelSelect').value;
-    const car = evDatabase[selectedBrand][selectedModelIndex];
-
-    if (!car) return;
-
-    // Efficiency in kWh per KM (Battery Capacity / Real World Range)
-    const evEfficiencyKwhPerKm = car.battery / car.range;
-    
-    // Display Specs
-    document.getElementById('specInfo').innerHTML = `
-        <strong>${car.model} Specs:</strong><br>
-        • Battery Capacity: ${car.battery} kWh<br>
-        • Real-World Range: ~${car.range} km per full charge<br>
-        • Efficiency: ~${(evEfficiencyKwhPerKm * 100).toFixed(1)} kWh / 100 km
-    `;
-
-    // 1. Electricity Required (kWh) = km * (kWh per km)
-    const monthlyUnitsNeeded = km * evEfficiencyKwhPerKm;
-
-    // 2. EV Monthly Cost (₹) = kWh * Electricity Rate
-    const monthlyEvCost = monthlyUnitsNeeded * elecTariff;
-
-    // 3. Fuel Monthly Cost (₹) = (km / Mileage) * Fuel Price
-    const monthlyFuelCost = (km / fuelMileage) * fuelPrice;
-
-    // 4. Monthly & Yearly Savings
-    const monthlySavings = monthlyFuelCost - monthlyEvCost;
-    const yearlySavings = monthlySavings * 12;
-
-    // Update Output Dashboard UI
-    document.getElementById('monthlyUnits').textContent = `${monthlyUnitsNeeded.toFixed(1)} kWh`;
-    document.getElementById('evCost').textContent = `₹${Math.round(monthlyEvCost).toLocaleString('en-IN')}`;
-    document.getElementById('fuelCost').textContent = `₹${Math.round(monthlyFuelCost).toLocaleString('en-IN')}`;
-    
-    const savingsElement = document.getElementById('yearlySavings');
-    if (yearlySavings >= 0) {
-        savingsElement.style.color = "var(--success)";
-        savingsElement.textContent = `₹${Math.round(yearlySavings).toLocaleString('en-IN')}`;
-    } else {
-        savingsElement.style.color = "#d9534f";
-        savingsElement.textContent = `- ₹${Math.round(Math.abs(yearlySavings)).toLocaleString('en-IN')} (Fuel Cheaper)`;
-    }
-}
-
-window.onload = initApp;
-</script>
-
-</body>
-</html>
