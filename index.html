@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -43,7 +44,6 @@
         .header h2 { margin: 0; font-size: 1.6rem; color: var(--primary); font-weight: 800; }
         .header p { margin: 6px 0 0 0; font-size: 0.85rem; color: var(--text-muted); }
 
-        /* Two Column Master Layout */
         .master-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -83,7 +83,6 @@
         .grid-2 { display: flex; gap: 12px; }
         .grid-2 > div { flex: 1; min-width: 0; }
 
-        /* Vehicle Preview Card */
         .car-visual-card {
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid var(--card-border);
@@ -126,7 +125,6 @@
             margin-bottom: 2px;
         }
 
-        /* Right Column Dashboard Panel */
         .panel-right {
             background: #0f172a;
             border: 1px solid var(--card-border);
@@ -176,7 +174,7 @@
 <div class="dashboard">
     <div class="header">
         <h2>⚡ EV vs. Fuel Cost Analytics</h2>
-        <p>Tamil Nadu TANGEDCO Domestic LT-1A Tariff Calculator</p>
+        <p>Tamil Nadu TANGEDCO Domestic LT-1A Tariff Calculator & Coimbatore On-Road Pricing</p>
     </div>
 
     <div class="master-grid">
@@ -213,7 +211,7 @@
                 </div>
             </div>
 
-            <!-- Vehicle Preview Card -->
+            <!-- Vehicle Preview Card with Coimbatore On-Road Price -->
             <div class="car-visual-card">
                 <div class="car-icon-box">
                     <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.04 3H5.81l1.04-3zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
@@ -251,48 +249,49 @@
 <script>
 var evDatabase = {
     "Mahindra": [
-        { model: "XUV 3XO EV (39.4 kWh)", battery: 39.4, range: 285 },
-        { model: "BE 6e (59 kWh)", battery: 59.0, range: 420 },
-        { model: "BE 6e (79 kWh)", battery: 79.0, range: 530 },
-        { model: "XEV 9e (59 kWh)", battery: 59.0, range: 410 },
-        { model: "XEV 9e (79 kWh)", battery: 79.0, range: 520 },
-        { model: "XEV 9S 7-Seater (59 kWh)", battery: 59.0, range: 410 },
-        { model: "XEV 9S 7-Seater (79 kWh)", battery: 79.0, range: 500 },
-        { model: "XUV400 (34.5 kWh)", battery: 34.5, range: 250 },
-        { model: "XUV400 (39.4 kWh)", battery: 39.4, range: 285 }
+        { model: "XUV 3XO EV AX5 (39.4 kWh)", battery: 39.4, range: 285, price: "₹15.01 Lakh" },
+        { model: "XUV 3XO EV AX7L (39.4 kWh)", battery: 39.4, range: 285, price: "₹16.12 Lakh" },
+        { model: "BE 6e (59 kWh)", battery: 59.0, range: 420, price: "₹20.46 Lakh" },
+        { model: "BE 6e (79 kWh)", battery: 79.0, range: 530, price: "₹25.87 Lakh" },
+        { model: "XEV 9e (59 kWh)", battery: 59.0, range: 410, price: "₹21.90 Lakh" },
+        { model: "XEV 9e (79 kWh)", battery: 79.0, range: 520, price: "₹26.50 Lakh" },
+        { model: "XEV 9S 7-Seater (59 kWh)", battery: 59.0, range: 410, price: "₹22.50 Lakh" },
+        { model: "XEV 9S 7-Seater (79 kWh)", battery: 79.0, range: 500, price: "₹27.20 Lakh" },
+        { model: "XUV400 EL Pro (34.5 kWh)", battery: 34.5, range: 250, price: "₹16.49 Lakh" },
+        { model: "XUV400 EL Pro (39.4 kWh)", battery: 39.4, range: 285, price: "₹17.69 Lakh" }
     ],
     "Tata Motors": [
-        { model: "Punch EV (MR 30 kWh)", battery: 30.0, range: 260 },
-        { model: "Punch EV (LR 40 kWh)", battery: 40.0, range: 355 },
-        { model: "Tiago EV (19.2 kWh)", battery: 19.2, range: 170 },
-        { model: "Tiago EV (24 kWh)", battery: 24.0, range: 215 },
-        { model: "Nexon EV (MR 30 kWh)", battery: 30.0, range: 240 },
-        { model: "Nexon EV (LR 45 kWh)", battery: 45.0, range: 350 },
-        { model: "Curvv EV (45 kWh)", battery: 45.0, range: 340 },
-        { model: "Curvv EV (55 kWh)", battery: 55.0, range: 410 },
-        { model: "Harrier EV (65 kWh)", battery: 65.0, range: 450 },
-        { model: "Sierra EV (63 kWh)", battery: 63.0, range: 440 }
+        { model: "Punch EV Smart 30", battery: 30.0, range: 260, price: "₹10.24 Lakh" },
+        { model: "Punch EV Empowered+ 40", battery: 40.0, range: 355, price: "₹13.78 Lakh" },
+        { model: "Tiago EV XE (19.2 kWh)", battery: 19.2, range: 170, price: "₹8.29 Lakh" },
+        { model: "Tiago EV XZ+ (24 kWh)", battery: 24.0, range: 215, price: "₹10.15 Lakh" },
+        { model: "Nexon EV Creative 30", battery: 30.0, range: 240, price: "₹14.99 Lakh" },
+        { model: "Nexon EV Empowered 45", battery: 45.0, range: 350, price: "₹17.19 Lakh" },
+        { model: "Curvv EV 45 kWh", battery: 45.0, range: 340, price: "₹17.99 Lakh" },
+        { model: "Curvv EV 55 kWh", battery: 55.0, range: 410, price: "₹20.19 Lakh" },
+        { model: "Harrier EV (65 kWh)", battery: 65.0, range: 450, price: "₹23.50 Lakh" },
+        { model: "Sierra EV (63 kWh)", battery: 63.0, range: 440, price: "₹22.80 Lakh" }
     ],
     "Maruti Suzuki": [
-        { model: "e Vitara (49 kWh)", battery: 49.0, range: 340 },
-        { model: "e Vitara (61 kWh)", battery: 61.0, range: 420 }
+        { model: "e Vitara (49 kWh)", battery: 49.0, range: 340, price: "₹16.19 Lakh" },
+        { model: "e Vitara (61 kWh)", battery: 61.0, range: 420, price: "₹19.49 Lakh" }
     ],
     "MG Motor": [
-        { model: "Comet EV (17.3 kWh)", battery: 17.3, range: 160 },
-        { model: "Windsor EV (38 kWh)", battery: 38.0, range: 270 },
-        { model: "Windsor EV (52.9 kWh)", battery: 52.9, range: 380 },
-        { model: "ZS EV (50.3 kWh)", battery: 50.3, range: 340 }
+        { model: "Comet EV (17.3 kWh)", battery: 17.3, range: 160, price: "₹7.98 Lakh" },
+        { model: "Windsor EV (38 kWh)", battery: 38.0, range: 270, price: "₹14.85 Lakh" },
+        { model: "Windsor EV (52.9 kWh)", battery: 52.9, range: 380, price: "₹16.75 Lakh" },
+        { model: "ZS EV Excite (50.3 kWh)", battery: 50.3, range: 340, price: "₹20.99 Lakh" }
     ],
     "Hyundai & Kia": [
-        { model: "Creta Electric (42 kWh)", battery: 42.0, range: 310 },
-        { model: "Creta Electric (51.4 kWh)", battery: 51.4, range: 380 },
-        { model: "Ioniq 5 (72.6 kWh)", battery: 72.6, range: 450 },
-        { model: "Syros EV (51.4 kWh)", battery: 51.4, range: 390 }
+        { model: "Creta Electric (42 kWh)", battery: 42.0, range: 310, price: "₹18.50 Lakh" },
+        { model: "Creta Electric (51.4 kWh)", battery: 51.4, range: 380, price: "₹21.20 Lakh" },
+        { model: "Ioniq 5 (72.6 kWh)", battery: 72.6, range: 450, price: "₹46.05 Lakh" },
+        { model: "Syros EV (51.4 kWh)", battery: 51.4, range: 390, price: "₹19.90 Lakh" }
     ],
     "BYD & Luxury": [
-        { model: "BYD Atto 3 (60.48 kWh)", battery: 60.48, range: 410 },
-        { model: "BYD Seal (82.56 kWh)", battery: 82.56, range: 540 },
-        { model: "BMW iX1 (64.7 kWh)", battery: 64.7, range: 380 }
+        { model: "BYD Atto 3 (60.48 kWh)", battery: 60.48, range: 410, price: "₹25.90 Lakh" },
+        { model: "BYD Seal (82.56 kWh)", battery: 82.56, range: 540, price: "₹45.55 Lakh" },
+        { model: "BMW iX1 (64.7 kWh)", battery: 64.7, range: 380, price: "₹49.90 Lakh" }
     ]
 };
 
@@ -404,8 +403,8 @@ function runCalculation() {
 
     document.getElementById('specInfo').innerHTML = 
         '<strong>' + selectedCar.model + '</strong><br>' +
-        'Battery: ' + selectedCar.battery + ' kWh | Range: ~' + selectedCar.range + ' km<br>' +
-        'Energy: ~' + (kwhPerKm * 100).toFixed(1) + ' kWh / 100 km';
+        'Coimbatore On-Road: <span style="color:var(--primary); font-weight:700;">' + selectedCar.price + '</span><br>' +
+        'Battery: ' + selectedCar.battery + ' kWh | Range: ~' + selectedCar.range + ' km';
 
     var monthlyKwhNeeded = monthlyKm * kwhPerKm;
     var evMonthlyCost = calculateTNTariffMonthlyBill(monthlyKwhNeeded);
@@ -457,4 +456,3 @@ initApp();
 
 </body>
 </html>
-
