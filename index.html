@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,15 +11,12 @@
             --primary: #38bdf8;
             --primary-glow: rgba(56, 189, 248, 0.15);
             --success: #10b981;
-            --success-glow: rgba(16, 185, 129, 0.15);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --input-bg: #0f172a;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; color-scheme: dark; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -42,24 +38,9 @@
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        .header h2 {
-            margin: 0;
-            font-size: 1.5rem;
-            color: var(--primary);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-        }
-
-        .header p {
-            margin: 6px 0 0 0;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
+        .header { text-align: center; margin-bottom: 24px; }
+        .header h2 { margin: 0; font-size: 1.5rem; color: var(--primary); font-weight: 800; }
+        .header p { margin: 6px 0 0 0; font-size: 0.85rem; color: var(--text-muted); }
 
         .section-label {
             font-size: 0.75rem;
@@ -70,18 +51,9 @@
             margin: 20px 0 10px 0;
         }
 
-        .form-group {
-            margin-bottom: 14px;
-        }
-
-        label {
-            display: block;
-            font-size: 0.82rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text-main);
-        }
-
+        .form-group { margin-bottom: 14px; }
+        label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 6px; color: var(--text-main); }
+        
         input, select {
             width: 100%;
             padding: 12px 14px;
@@ -91,23 +63,11 @@
             background-color: var(--input-bg);
             color: var(--text-main);
             outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
         }
+        input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
 
-        input:focus, select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-glow);
-        }
-
-        .grid-2 {
-            display: flex;
-            gap: 12px;
-        }
-
-        .grid-2 > div {
-            flex: 1;
-            min-width: 0;
-        }
+        .grid-2 { display: flex; gap: 12px; }
+        .grid-2 > div { flex: 1; min-width: 0; }
 
         .spec-badge {
             background: rgba(56, 189, 248, 0.08);
@@ -136,19 +96,299 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             font-size: 0.9rem;
         }
-
-        .metric-row:last-child {
-            border-bottom: none;
-        }
-
-        .metric-row span {
-            color: var(--text-muted);
-        }
-
-        .metric-row strong {
-            color: var(--text-main);
-            font-weight: 700;
-        }
+        .metric-row span { color: var(--text-muted); }
+        .metric-row strong { color: var(--text-main); font-weight: 700; }
 
         .hero-savings {
-            background: linear-gradient(135deg, rgba
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 18px;
+            text-align: center;
+        }
+        .hero-savings small { color: var(--success); font-weight: 700; text-transform: uppercase; font-size: 0.75rem; }
+        .hero-savings .amount { display: block; font-size: 1.8rem; font-weight: 800; color: var(--success); margin-top: 4px; }
+
+        .visual-horizon { margin-top: 18px; display: flex; flex-direction: column; gap: 12px; }
+        .horizon-item { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; padding: 10px 12px; }
+        .horizon-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.84rem; margin-bottom: 6px; }
+        .horizon-title { font-weight: 700; color: var(--text-main); }
+        .horizon-badge { background: rgba(16, 185, 129, 0.2); color: var(--success); font-size: 0.72rem; padding: 2px 8px; border-radius: 12px; font-weight: 600; }
+        .horizon-value { font-weight: 800; color: var(--success); }
+        .progress-track { height: 10px; background: #1e293b; border-radius: 5px; overflow: hidden; width: 100%; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #10b981 0%, #34d399 100%); border-radius: 5px; }
+
+        hr { border: 0; border-top: 1px solid var(--card-border); margin: 20px 0; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+    <div class="header">
+        <h2>⚡ EV vs. Fuel Cost Analytics</h2>
+        <p>Automated Tamil Nadu TANGEDCO Domestic Tariff Calculator</p>
+    </div>
+
+    <div class="section-label">1. Usage & Operational Parameters</div>
+    <div class="form-group">
+        <label>Monthly Distance Travelled (km)</label>
+        <input type="number" id="monthlyKm" value="1500" oninput="runCalculation()">
+    </div>
+
+    <div class="grid-2">
+        <div class="form-group">
+            <label>Fuel Price (₹ / Litre)</label>
+            <input type="number" id="fuelPrice" value="102" oninput="runCalculation()">
+        </div>
+        <div class="form-group">
+            <label>Fuel Mileage (km / Litre)</label>
+            <input type="number" id="fuelMileage" value="14" oninput="runCalculation()">
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="section-label">2. Vehicle Configuration</div>
+    <div class="grid-2">
+        <div class="form-group">
+            <label>EV Manufacturer</label>
+            <select id="brandSelect" onchange="updateSubModels()"></select>
+        </div>
+        <div class="form-group">
+            <label>Model & Sub-Variant</label>
+            <select id="modelSelect" onchange="runCalculation()"></select>
+        </div>
+    </div>
+
+    <div class="spec-badge" id="specInfo">Loading vehicle database...</div>
+
+    <div class="metrics-card">
+        <div class="section-label" style="margin-top:0; color: var(--text-muted);">Monthly Expenditure Comparison</div>
+        
+        <div class="metric-row"><span>Electricity Consumption:</span><strong id="monthlyUnits">0 kWh</strong></div>
+        <div class="metric-row"><span>Effective TN Tariff Bracket:</span><strong id="dynamicRate">₹0.00 / unit</strong></div>
+        <div class="metric-row"><span>EV Monthly Charging Cost:</span><strong id="evCost">₹0</strong></div>
+        <div class="metric-row"><span>ICE Fuel Monthly Cost:</span><strong id="fuelCost">₹0</strong></div>
+
+        <div class="hero-savings">
+            <small>Estimated Net Annual Savings</small>
+            <span class="amount" id="yearlySavings">₹0</span>
+        </div>
+
+        <div class="section-label" style="margin-top:20px; color: var(--text-muted);">Cumulative Savings Horizon (5-Year Projection)</div>
+        <div class="visual-horizon" id="visualHorizon"></div>
+    </div>
+</div>
+
+<script>
+var evDatabase = {
+    "Mahindra": [
+        { model: "XUV 3XO EV (39.4 kWh)", battery: 39.4, range: 285 },
+        { model: "BE 6e (59 kWh)", battery: 59.0, range: 420 },
+        { model: "BE 6e (79 kWh)", battery: 79.0, range: 530 },
+        { model: "XEV 9e (59 kWh)", battery: 59.0, range: 410 },
+        { model: "XEV 9e (79 kWh)", battery: 79.0, range: 520 },
+        { model: "XEV 9S 7-Seater (59 kWh)", battery: 59.0, range: 410 },
+        { model: "XEV 9S 7-Seater (79 kWh)", battery: 79.0, range: 500 },
+        { model: "XUV400 (34.5 kWh)", battery: 34.5, range: 250 },
+        { model: "XUV400 (39.4 kWh)", battery: 39.4, range: 285 }
+    ],
+    "Tata Motors": [
+        { model: "Punch EV (MR 30 kWh)", battery: 30.0, range: 260 },
+        { model: "Punch EV (LR 40 kWh)", battery: 40.0, range: 355 },
+        { model: "Tiago EV (19.2 kWh)", battery: 19.2, range: 170 },
+        { model: "Tiago EV (24 kWh)", battery: 24.0, range: 215 },
+        { model: "Nexon EV (MR 30 kWh)", battery: 30.0, range: 240 },
+        { model: "Nexon EV (LR 45 kWh)", battery: 45.0, range: 350 },
+        { model: "Curvv EV (45 kWh)", battery: 45.0, range: 340 },
+        { model: "Curvv EV (55 kWh)", battery: 55.0, range: 410 },
+        { model: "Harrier EV (65 kWh)", battery: 65.0, range: 450 },
+        { model: "Sierra EV (63 kWh)", battery: 63.0, range: 440 }
+    ],
+    "Maruti Suzuki": [
+        { model: "e Vitara (49 kWh)", battery: 49.0, range: 340 },
+        { model: "e Vitara (61 kWh)", battery: 61.0, range: 420 }
+    ],
+    "MG Motor": [
+        { model: "Comet EV (17.3 kWh)", battery: 17.3, range: 160 },
+        { model: "Windsor EV (38 kWh)", battery: 38.0, range: 270 },
+        { model: "Windsor EV (52.9 kWh)", battery: 52.9, range: 380 },
+        { model: "ZS EV (50.3 kWh)", battery: 50.3, range: 340 }
+    ],
+    "Hyundai & Kia": [
+        { model: "Creta Electric (42 kWh)", battery: 42.0, range: 310 },
+        { model: "Creta Electric (51.4 kWh)", battery: 51.4, range: 380 },
+        { model: "Ioniq 5 (72.6 kWh)", battery: 72.6, range: 450 },
+        { model: "Syros EV (51.4 kWh)", battery: 51.4, range: 390 }
+    ],
+    "BYD & Luxury": [
+        { model: "BYD Atto 3 (60.48 kWh)", battery: 60.48, range: 410 },
+        { model: "BYD Seal (82.56 kWh)", battery: 82.56, range: 540 },
+        { model: "BMW iX1 (64.7 kWh)", battery: 64.7, range: 380 }
+    ]
+};
+
+function calculateTNTariffMonthlyBill(monthlyUnits) {
+    if (monthlyUnits <= 0) return 0;
+    var bimonthly = monthlyUnits * 2;
+    var bill = 0;
+
+    if (bimonthly <= 500) {
+        var rem = bimonthly - 200;
+        if (rem > 0) {
+            var b1 = Math.min(rem, 200);
+            bill += b1 * 4.70;
+            rem -= b1;
+        }
+        if (rem > 0) {
+            var b2 = Math.min(rem, 100);
+            bill += b2 * 6.30;
+        }
+    } else {
+        var rem = bimonthly - 100;
+        if (rem > 0) {
+            var b1 = Math.min(rem, 300);
+            bill += b1 * 4.70;
+            rem -= b1;
+        }
+        if (rem > 0) {
+            var b2 = Math.min(rem, 100);
+            bill += b2 * 6.30;
+            rem -= b2;
+        }
+        if (rem > 0) {
+            var b3 = Math.min(rem, 100);
+            bill += b3 * 8.40;
+            rem -= b3;
+        }
+        if (rem > 0) {
+            var b4 = Math.min(rem, 200);
+            bill += b4 * 9.45;
+            rem -= b4;
+        }
+        if (rem > 0) {
+            var b5 = Math.min(rem, 200);
+            bill += b5 * 10.50;
+            rem -= b5;
+        }
+        if (rem > 0) {
+            bill += rem * 11.55;
+        }
+    }
+    return bill / 2;
+}
+
+function updateSubModels() {
+    var brandSelect = document.getElementById('brandSelect');
+    var modelSelect = document.getElementById('modelSelect');
+    if (!brandSelect || !modelSelect) return;
+
+    var selectedBrand = brandSelect.value;
+    modelSelect.innerHTML = '';
+
+    if (evDatabase[selectedBrand]) {
+        for (var i = 0; i < evDatabase[selectedBrand].length; i++) {
+            var option = document.createElement('option');
+            option.value = i;
+            option.textContent = evDatabase[selectedBrand][i].model;
+            modelSelect.appendChild(option);
+        }
+    }
+    runCalculation();
+}
+
+function initApp() {
+    var brandSelect = document.getElementById('brandSelect');
+    if (!brandSelect) return;
+    
+    brandSelect.innerHTML = '';
+    for (var brand in evDatabase) {
+        var option = document.createElement('option');
+        option.value = brand;
+        option.textContent = brand;
+        brandSelect.appendChild(option);
+    }
+    
+    brandSelect.value = "Mahindra";
+    updateSubModels();
+}
+
+function runCalculation() {
+    var kmEl = document.getElementById('monthlyKm');
+    var fuelPriceEl = document.getElementById('fuelPrice');
+    var fuelMileageEl = document.getElementById('fuelMileage');
+    var brandSelect = document.getElementById('brandSelect');
+    var modelSelect = document.getElementById('modelSelect');
+
+    if (!kmEl || !fuelPriceEl || !fuelMileageEl || !brandSelect || !modelSelect) return;
+
+    var monthlyKm = parseFloat(kmEl.value) || 0;
+    var fuelPrice = parseFloat(fuelPriceEl.value) || 0;
+    var fuelMileage = parseFloat(fuelMileageEl.value) || 1;
+
+    var brand = brandSelect.value;
+    var modelIdx = modelSelect.value;
+
+    if (!evDatabase[brand] || !evDatabase[brand][modelIdx]) return;
+    var selectedCar = evDatabase[brand][modelIdx];
+
+    var kwhPerKm = selectedCar.battery / selectedCar.range;
+
+    document.getElementById('specInfo').innerHTML = 
+        '<strong>' + selectedCar.model + ' Specs:</strong><br>' +
+        '• Usable Battery: <strong>' + selectedCar.battery + ' kWh</strong> | Range: <strong>~' + selectedCar.range + ' km</strong><br>' +
+        '• Vehicle Consumption: <strong>~' + (kwhPerKm * 100).toFixed(1) + ' kWh / 100 km</strong>';
+
+    var monthlyKwhNeeded = monthlyKm * kwhPerKm;
+    var evMonthlyCost = calculateTNTariffMonthlyBill(monthlyKwhNeeded);
+    var effectiveRatePerUnit = monthlyKwhNeeded > 0 ? (evMonthlyCost / monthlyKwhNeeded) : 0;
+
+    var fuelMonthlyCost = (monthlyKm / fuelMileage) * fuelPrice;
+    var monthlyNetSavings = fuelMonthlyCost - evMonthlyCost;
+    var annualNetSavings = monthlyNetSavings * 12;
+
+    document.getElementById('monthlyUnits').textContent = monthlyKwhNeeded.toFixed(1) + ' kWh';
+    document.getElementById('dynamicRate').textContent = '₹' + effectiveRatePerUnit.toFixed(2) + ' / unit';
+    document.getElementById('evCost').textContent = '₹' + Math.round(evMonthlyCost).toLocaleString('en-IN');
+    document.getElementById('fuelCost').textContent = '₹' + Math.round(fuelMonthlyCost).toLocaleString('en-IN');
+    
+    var yearlySavingsEl = document.getElementById('yearlySavings');
+    if (annualNetSavings >= 0) {
+        yearlySavingsEl.style.color = "var(--success)";
+        yearlySavingsEl.textContent = '₹' + Math.round(annualNetSavings).toLocaleString('en-IN');
+    } else {
+        yearlySavingsEl.style.color = "#ef4444";
+        yearlySavingsEl.textContent = '- ₹' + Math.round(Math.abs(annualNetSavings)).toLocaleString('en-IN');
+    }
+
+    var maxTarget = Math.max(annualNetSavings * 5, 1);
+    var horizonHtml = '';
+    var milestones = ["Payback Period", "Break-Even Margin", "Capital Accumulation", "Asset Savings", "5-Year Cumulative Net"];
+
+    for (var year = 1; year <= 5; year++) {
+        var totalSavings = annualNetSavings * year;
+        var percent = Math.max(Math.min((totalSavings / maxTarget) * 100, 100), 4);
+        var formattedSavings = totalSavings >= 0 ? '₹' + Math.round(totalSavings).toLocaleString('en-IN') : '- ₹' + Math.round(Math.abs(totalSavings)).toLocaleString('en-IN');
+
+        horizonHtml += 
+            '<div class="horizon-item">' +
+                '<div class="horizon-header">' +
+                    '<div><span class="horizon-title">Year ' + year + '</span> &nbsp;<span class="horizon-badge">' + milestones[year - 1] + '</span></div>' +
+                    '<span class="horizon-value">' + formattedSavings + '</span>' +
+                '</div>' +
+                '<div class="progress-track">' +
+                    '<div class="progress-fill" style="width: ' + percent + '%;"></div>' +
+                '</div>' +
+            '</div>';
+    }
+    document.getElementById('visualHorizon').innerHTML = horizonHtml;
+}
+
+// Immediate execution trigger
+initApp();
+</script>
+
+</body>
+</html>
+
