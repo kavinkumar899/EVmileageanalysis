@@ -286,6 +286,53 @@
 
         <div class="car-visual-card">
             <div>
-                <div class="section-title" style="margin-top:0;">Vehicle Preview</div>
+                <div class="section-title" style="margin-top:0;">Vehicle Preview Card</div>
                 <div class="car-image-container">
-                    <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1
+                    <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.04 3H5.81l1.04-3zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                    <span id="previewName">Select a vehicle</span>
+                </div>
+            </div>
+            <div class="spec-badge" id="specInfo">
+                Loading specs...
+            </div>
+        </div>
+    </div>
+
+    <div class="output-card">
+        <div class="section-title" style="margin-top:0;">Monthly Operational Breakdown (TANGEDCO TN Slab)</div>
+        <div class="output-row">
+            <span>Electricity Needed (Monthly):</span>
+            <strong id="monthlyUnits">0 kWh</strong>
+        </div>
+        <div class="output-row">
+            <span>Effective TN Tariff Rate:</span>
+            <strong id="dynamicRate">₹0 / unit</strong>
+        </div>
+        <div class="output-row">
+            <span>EV Monthly Charging Cost:</span>
+            <strong id="evCost">₹0</strong>
+        </div>
+        <div class="output-row">
+            <span>Fuel Monthly Cost:</span>
+            <strong id="fuelCost">₹0</strong>
+        </div>
+        
+        <div class="highlight-box">
+            <small>Estimated Net Yearly Savings</small>
+            <span id="yearlySavings">₹0</span>
+        </div>
+
+        <div class="section-title">Visual 5-Year Cumulative Savings Growth</div>
+        <div class="chart-container" id="visualChart"></div>
+    </div>
+</div>
+
+<script>
+var evDatabase = {
+    "Mahindra": [
+        { model: "XUV 3XO EV (39.4 kWh)", battery: 39.4, range: 285 },
+        { model: "BE 6e (59 kWh)", battery: 59.0, range: 420 },
+        { model: "BE 6e (79 kWh)", battery: 79.0, range: 530 },
+        { model: "XEV 9e (59 kWh)", battery: 59.0, range: 410 },
+        { model: "XEV 9e (79 kWh)", battery: 79.0, range: 520 },
+        { model: "XEV 9S 7-Seater (59 kWh)", battery: 59.0,
