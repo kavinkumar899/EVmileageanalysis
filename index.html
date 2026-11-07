@@ -3,155 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EV vs Fuel Cost & Savings Calculator (TN Tariff)</title>
+    <title>EV vs Fuel Calculator</title>
     <style>
-        :root {
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --primary: #2563eb;
-            --success: #16a34a;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --border-color: #cbd5e1;
-        }
+        body { font-family: sans-serif; background: #f8fafc; color: #0f172a; padding: 16px; margin: 0; }
+        .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 24px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        h2 { text-align: center; color: #2563eb; margin-top: 0; }
+        .form-group { margin-bottom: 14px; }
+        label { display: block; font-weight: bold; margin-bottom: 4px; font-size: 0.9rem; }
+        select, input { width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; background: #fff; }
+        .grid { display: flex; gap: 10px; }
+        .grid > div { flex: 1; }
+        .output { background: #f1f5f9; padding: 16px; border-radius: 8px; margin-top: 20px; }
+        .row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.95rem; }
+        .highlight { background: #f0fdf4; border: 1px solid #b7ebc9; padding: 12px; text-align: center; border-radius: 6px; margin-top: 12px; }
+        .highlight span { font-size: 1.4rem; font-weight: bold; color: #16a34a; display: block; margin-top: 4px; }
+    </style>
+</head>
+<body>
 
-        * {
-            box-sizing: border-box;
-            color-scheme: light !important;
-        }
+<div class="container">
+    <h2>⚡ EV vs Fuel Cost Calculator</h2>
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 16px;
-        }
+    <div class="form-group">
+        <label>Monthly Driving Distance (km)</label>
+        <input type="number" id="monthlyKm" value="1500" oninput="calculate()">
+    </div>
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
-        }
+    <div class="grid">
+        <div class="form-group">
+            <label>Fuel Price (₹/L)</label>
+            <input type="number" id="fuelPrice" value="102" oninput="calculate()">
+        </div>
+        <div class="form-group">
+            <label>Fuel Mileage (km/L)</label>
+            <input type="number" id="fuelMileage" value="14" oninput="calculate()">
+        </div>
+    </div>
 
-        h2 {
-            margin-top: 0;
-            text-align: center;
-            font-size: 1.4rem;
-            color: var(--primary);
-            font-weight: 700;
-        }
+    <div class="grid">
+        <div class="form-group">
+            <label>EV Brand</label>
+            <select id="brandSelect" onchange="updateModels()">
+                <option value="Mahindra">Mahindra</option>
+                <option value="Tata">Tata Motors</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Model Variant</label>
+            <select id="modelSelect" onchange="calculate()">
+                <!-- Hardcoded fallback options so dropdown is never blank -->
+                <option value="0">XUV 3XO EV (39.4 kWh - 285 km)</option>
+                <option value="1">BE 6e (59 kWh - 420 km)</option>
+            </select>
+        </div>
+    </div>
 
-        .section-title {
-            font-size: 0.82rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin: 18px 0 8px 0;
-            font-weight: 700;
-        }
+    <div class="output">
+        <div class="row"><span>Monthly EV Cost:</span> <strong id="evCost">₹0</strong></div>
+        <div class="row"><span>Monthly Fuel Cost:</span> <strong id="fuelCost">₹0</strong></div>
+        <div class="highlight">
+            <small>ESTIMATED YEARLY SAVINGS</small>
+            <span id="yearlySavings">₹0</span>
+        </div>
+    </div>
+</div>
 
-        .form-group {
-            margin-bottom: 14px;
-        }
+<script>
+var models = {
+    "Mahindra": [
+        { name: "XUV 3XO EV (39.4 kWh)", bat: 39.4, range: 285 },
+        { name: "BE 6e (59 kWh)", bat: 59.0, range: 420 },
+        { name: "XEV 9e (79 kWh)", bat: 79.0, range: 520 }
+    ],
+    "Tata": [
+        { name: "Punch EV (30 kWh)", bat: 30.0, range: 260 },
+        { name: "Nexon EV (45 kWh)", bat: 45.0, range: 350 },
+        { name: "Curvv EV (55 kWh)", bat: 55.0, range: 410 }
+    ]
+};
 
-        label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: #1e293b;
+function updateModels() {
+    var brand = document.getElementById('brandSelect').value;
+    var modelSel = document.getElementById('modelSelect');
+    modelSel.innerHTML = "";
+    
+    if(models[brand]) {
+        for(var i=0; i<models[brand].length; i++) {
+            var opt = document.createElement('option');
+            opt.value = i;
+            opt.textContent = models[brand][i].name;
+            modelSel.appendChild(opt);
         }
+    }
+    calculate();
+}
 
-        input, select {
-            width: 100%;
-            padding: 11px 12px;
-            font-size: 0.95rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background-color: #ffffff !important;
-            color: #0f172a !important;
-            display: block;
-        }
+function calculate() {
+    var km = parseFloat(document.getElementById('monthlyKm').value) || 0;
+    var fPrice = parseFloat(document.getElementById('fuelPrice').value) || 0;
+    var fMileage = parseFloat(document.getElementById('fuelMileage').value) || 1;
+    var brand = document.getElementById('brandSelect').value;
+    var idx = document.getElementById('modelSelect').value;
 
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-        }
+    if(!models[brand] || !models[brand][idx]) return;
+    var car = models[brand][idx];
 
-        .grid-2 {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 6px;
-        }
+    var kwhNeeded = km * (car.bat / car.range);
+    
+    // TN Tariff simplified billing estimation
+    var biMonthly = kwhNeeded * 2;
+    var biCost = biMonthly <= 500 ? (Math.max(biMonthly - 200, 0) * 4.70) : (biMonthly * 6.50);
+    var evMonthly = biCost / 2;
 
-        .grid-2 > div {
-            flex: 1;
-            min-width: 0;
-        }
+    var fuelMonthly = (km / fMileage) * fPrice;
+    var savings = (fuelMonthly - evMonthly) * 12;
 
-        .spec-badge {
-            background-color: #eff6ff;
-            border-left: 4px solid var(--primary);
-            padding: 12px 14px;
-            margin: 16px 0;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            color: #1e3a8a;
-        }
+    document.getElementById('evCost').textContent = '₹' + Math.round(evMonthly).toLocaleString('en-IN');
+    document.getElementById('fuelCost').textContent = '₹' + Math.round(fuelMonthly).toLocaleString('en-IN');
+    document.getElementById('yearlySavings').textContent = '₹' + Math.round(savings).toLocaleString('en-IN');
+}
 
-        .output-card {
-            background: #f1f5f9;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-        }
+updateModels();
+</script>
 
-        .output-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 0.92rem;
-        }
-
-        .highlight-box {
-            background: #f0fdf4;
-            border: 1px solid #b7ebc9;
-            padding: 14px;
-            border-radius: 8px;
-            margin-top: 14px;
-            text-align: center;
-        }
-
-        .highlight-box small {
-            color: #15803d;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-        }
-
-        .highlight-box span {
-            display: block;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--success);
-            margin-top: 4px;
-        }
-
-        .chart-container {
-            margin-top: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .chart-bar-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0
+</body>
+</html>
