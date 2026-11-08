@@ -201,16 +201,16 @@
         <div class="control-group">
             <label>Meal Time</label>
             <div class="btn-group" id="mealGroup">
-                <button class="select-btn active" onclick="selectMeal('Breakfast', event)">Breakfast</button>
-                <button class="select-btn" onclick="selectMeal('Lunch', event)">Lunch</button>
-                <button class="select-btn" onclick="selectMeal('Dinner', event)">Dinner</button>
+                <button class="select-btn active" data-meal="Breakfast" onclick="selectMeal('Breakfast', event)">Breakfast</button>
+                <button class="select-btn" data-meal="Lunch" onclick="selectMeal('Lunch', event)">Lunch</button>
+                <button class="select-btn" data-meal="Dinner" onclick="selectMeal('Dinner', event)">Dinner</button>
             </div>
         </div>
         <div class="control-group">
             <label>Dietary Preference</label>
             <div class="btn-group" id="dietGroup">
-                <button class="select-btn active" onclick="selectDiet('Veg', event)">Veg</button>
-                <button class="select-btn" onclick="selectDiet('Non-Veg', event)">Non-Veg</button>
+                <button class="select-btn active" data-diet="Veg" onclick="selectDiet('Veg', event)">Veg</button>
+                <button class="select-btn" data-diet="Non-Veg" onclick="selectDiet('Non-Veg', event)">Non-Veg</button>
             </div>
         </div>
         <div>
@@ -461,6 +461,4 @@
         },
         {
             id: 14, meal: "Lunch", diet: "Veg", name: "Methi Dal Tadka with Quinoa", gi: "High Fiber", calories: "310 kcal",
-            desc: "Yellow dal tempered with fresh fenugreek leaves and garlic, served over protein quinoa.",
-            ingredients: [
-                "1/2 cup yellow moong
+            desc: "Yellow dal tempered with fresh fenugreek leaves and garlic,
