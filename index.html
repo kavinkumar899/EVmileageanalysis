@@ -446,4 +446,84 @@
                 "100g shredded boiled chicken",
                 "1 cup sliced mushrooms, baby corn, and bok choy or spinach",
                 "1 tbsp minced ginger and garlic",
-                "Crushed black
+                "Crushed black pepper and soy sauce (low sodium)"
+            ],
+            steps: [
+                "Boil ginger, garlic, and chicken bones or shredded chicken in 3 cups of water for flavorful broth.",
+                "Add sliced mushrooms, baby corn, and greens into the simmering broth.",
+                "Season with crushed black pepper and salt.",
+                "Serve hot for an easy-to-digest, low-glycemic dinner."
+            ]
+        }
+    ];
+
+    var selectedMeal = 'Breakfast';
+    var selectedDiet = 'Veg';
+
+    function selectMeal(meal, event) {
+        selectedMeal = meal;
+        updateGroupActive('mealGroup', event.target);
+    }
+
+    function selectDiet(diet, event) {
+        selectedDiet = diet;
+        updateGroupActive('dietGroup', event.target);
+    }
+
+    function updateGroupActive(groupId, activeBtn) {
+        var group = document.getElementById(groupId);
+        var buttons = group.querySelectorAll('.select-btn');
+        buttons.forEach(b => b.classList.remove('active'));
+        activeBtn.classList.add('active');
+    }
+
+    function loadDishMenu() {
+        var container = document.getElementById('dishListContainer');
+        container.innerHTML = '';
+
+        var filtered = database.filter(r => r.meal === selectedMeal && r.diet === selectedDiet);
+        document.getElementById('menuCount').textContent = filtered.length;
+
+        if (filtered.length === 0) {
+            container.innerHTML = '<div class="detail-placeholder">No dishes found for this selection.</div>';
+            return;
+        }
+
+        filtered.forEach(recipe => {
+            var card = document.createElement('div');
+            card.className = 'dish-item-card';
+            card.innerHTML = 
+                '<h4>' + recipe.name + '</h4>' +
+                '<p>' + recipe.desc + '</p>' +
+                '<div class="tag-row">' +
+                    '<span class="tag tag-gi">' + recipe.gi + '</span>' +
+                    '<span class="tag">' + recipe.calories + '</span>' +
+                '</div>';
+
+            card.onclick = function() {
+                document.querySelectorAll('.dish-item-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                showRecipeDetails(recipe);
+            };
+
+            container.appendChild(card);
+        });
+
+        // Reset right panel prompt
+        document.getElementById('rightDetailPanel').innerHTML = `
+            <div class="panel-title">Recipe Details & Preparation</div>
+            <div class="detail-placeholder">
+                <div>👉 Click on any dish from the left menu to view ingredients and step-by-step instructions.</div>
+            </div>
+        `;
+    }
+
+    // Automatically load initial menu on page load so dishes appear immediately
+    window.onload = function() {
+        loadDishMenu();
+    };
+</script>
+
+</body>
+</html>
+
