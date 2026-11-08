@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SwasthyaPlate India - Diabetic-Friendly Indian Meal Planner</title>
+    <title>SwasthyaPlate India - Comprehensive Diabetic-Friendly Meal Planner</title>
     <style>
         :root {
             --bg: #0f172a;
@@ -32,7 +32,7 @@
 
         .dashboard {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1250px;
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 20px;
@@ -105,9 +105,9 @@
         /* Master-Detail Layout */
         .master-detail-grid {
             display: grid;
-            grid-template-columns: 1fr 1.3fr;
+            grid-template-columns: 1fr 1.4fr;
             gap: 20px;
-            min-height: 480px;
+            min-height: 520px;
         }
 
         @media (max-width: 900px) {
@@ -121,7 +121,7 @@
             padding: 18px;
             display: flex;
             flex-direction: column;
-            max-height: 520px;
+            height: 560px;
             overflow-y: auto;
         }
 
@@ -177,6 +177,11 @@
             font-size: 0.9rem;
         }
 
+        .recipe-detail-content {
+            overflow-y: auto;
+            max-height: 480px;
+            padding-right: 6px;
+        }
         .recipe-detail-content h3 { margin: 0 0 10px 0; font-size: 1.2rem; color: var(--text-main); }
         .recipe-section-title { font-size: 0.8rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin: 16px 0 8px 0; }
         .recipe-detail-content ul, .recipe-detail-content ol { margin: 0; padding-left: 20px; font-size: 0.84rem; color: var(--text-muted); line-height: 1.6; }
@@ -188,7 +193,7 @@
 <div class="dashboard">
     <div class="header">
         <h2>🥗 SwasthyaPlate India</h2>
-        <p>Diabetic-Friendly Indian Cuisine Menu & Recipe Explorer</p>
+        <p>Comprehensive Diabetic-Friendly Indian Cuisine Menu & Recipe Explorer</p>
     </div>
 
     <!-- Control Panel -->
@@ -236,8 +241,9 @@
 </div>
 
 <script>
+    // Vast expanded database of diabetic-friendly Indian dishes across all combinations
     var database = [
-        // --- BREAKFAST : VEG ---
+        // ==================== BREAKFAST : VEG ====================
         {
             id: 1, meal: "Breakfast", diet: "Veg", name: "Moong Dal & Vegetable Chilla", gi: "Low GI", calories: "180 kcal",
             desc: "High protein savory pancake made from split yellow lentils and finely chopped vegetables.",
@@ -250,11 +256,11 @@
                 "1 tsp cold-pressed mustard or groundnut oil"
             ],
             steps: [
-                "Drain the soaked moong dal and blend into a smooth batter with ginger and green chili.",
-                "Transfer batter to a bowl, mix in chopped spinach, grated carrots, and salt.",
-                "Heat a non-stick pan on medium heat and grease lightly with oil.",
+                "Drain soaked moong dal and blend into smooth batter with ginger and green chili.",
+                "Stir in chopped spinach, grated carrots, and salt.",
+                "Heat a non-stick pan and grease lightly with oil.",
                 "Pour a ladle of batter and spread into a circular pancake.",
-                "Cook on both sides until golden brown and crispy. Serve hot with mint-coriander chutney."
+                "Cook on both sides until golden brown. Serve hot with mint chutney."
             ]
         },
         {
@@ -264,266 +270,197 @@
                 "1 cup rolled oats (ground to coarse flour)",
                 "1/4 cup besan (gram flour)",
                 "1/2 cup fresh methi (fenugreek) leaves, chopped",
-                "1/2 cup low-fat curd (dahi)",
+                "1/2 cup low-fat curd",
                 "Chopped onions and tomatoes for topping",
-                "Salt and turmeric powder to taste"
+                "Salt and turmeric powder"
             ],
             steps: [
-                "Mix oat flour, besan, curd, and water to form a thick uttapam batter.",
+                "Mix oat flour, besan, curd, and water to form thick uttapam batter.",
                 "Stir in chopped methi leaves, salt, and turmeric.",
-                "Heat a tawa, pour a small ladle of batter, and top with onions and tomatoes.",
-                "Drizzle a few drops of oil around edges, cover, and cook on medium flame until bottom is golden."
+                "Pour ladleful on hot tawa, top with onions and tomatoes.",
+                "Drizzle oil around edges and cook until bottom is golden and crispy."
+            ]
+        },
+        {
+            id: 3, meal: "Breakfast", diet: "Veg", name: "Ragi & Sprouted Rava Puttu", gi: "Low GI", calories: "220 kcal",
+            desc: "Nutritious steamed finger millet breakfast rich in calcium and low glycemic index.",
+            ingredients: [
+                "1 cup ragi flour (finger millet)",
+                "1/4 cup grated coconut",
+                "Pinch of salt and warm water as needed",
+                "1 tsp mustard seeds, curry leaves, and chana dal for tempering"
+            ],
+            steps: [
+                "Sprinkle warm water gradually into ragi flour to get crumbly moist texture.",
+                "Layer with grated coconut in a traditional puttu maker and steam for 10 minutes.",
+                "Lightly temper with mustard seeds, curry leaves, and chopped onions if desired."
+            ]
+        },
+        {
+            id: 4, meal: "Breakfast", diet: "Veg", name: "Besan Pyaaz Pweda (Cheela)", gi: "Low Carb", calories: "190 kcal",
+            desc: "Gram flour pancakes loaded with onions, green chilies, and fresh coriander.",
+            ingredients: [
+                "1 cup besan (gram flour)",
+                "1 medium onion, finely chopped",
+                "1 green chili and 1 tsp ajwain (carom seeds)",
+                "Salt and turmeric powder",
+                "1 tsp ghee or cold-pressed oil"
+            ],
+            steps: [
+                "Whisk besan with water, chopped onions, ajwain, salt, and turmeric into a flowing batter.",
+                "Heat tawa, pour batter, and spread evenly.",
+                "Drizzle oil and cook on medium flame until crisp on both sides."
+            ]
+        },
+        {
+            id: 5, meal: "Breakfast", diet: "Veg", name: "Quinoa Vegetable Poha", gi: "Diabetic Superfood", calories: "205 kcal",
+            desc: "Protein-rich twist on traditional flattened rice using protein-packed quinoa.",
+            ingredients: [
+                "1 cup cooked quinoa (fluffy)",
+                "1/2 cup mixed boiled peas and carrots",
+                "1 onion, chopped",
+                "1/2 tsp mustard seeds, turmeric, and curry leaves",
+                "1 tbsp roasted peanuts",
+                "Lemon juice"
+            ],
+            steps: [
+                "Temper mustard seeds, curry leaves, and green chilies in oil.",
+                "Sauté chopped onions until translucent, then add boiled vegetables.",
+                "Toss in cooked quinoa, turmeric, and salt. Mix gently.",
+                "Finish with fresh lemon juice and roasted peanuts."
+            ]
+        },
+        {
+            id: 6, meal: "Breakfast", diet: "Veg", name: "Sprouts & Paneer Salad Bowl", gi: "Zero Spike", calories: "230 kcal",
+            desc: "Mixed sprouted moong and moth beans tossed with crumbled paneer and zesty spices.",
+            ingredients: [
+                "1 cup mixed boiled sprouts",
+                "50g low-fat paneer, crumbled",
+                "1 tomato and 1 cucumber, diced",
+                "Chaat masala, lemon juice, and chopped coriander"
+            ],
+            steps: [
+                "Combine boiled sprouts, diced cucumber, and tomato in a large bowl.",
+                "Add crumbled paneer and toss well.",
+                "Season with chaat masala, salt, fresh lemon juice, and coriander."
             ]
         },
 
-        // --- BREAKFAST : NON-VEG ---
+        // ==================== BREAKFAST : NON-VEG ====================
         {
-            id: 3, meal: "Breakfast", diet: "Non-Veg", name: "Masala Vegetable Egg Bhurji", gi: "Low Carb", calories: "220 kcal",
+            id: 7, meal: "Breakfast", diet: "Non-Veg", name: "Masala Vegetable Egg Bhurji", gi: "Low Carb", calories: "220 kcal",
             desc: "Protein-packed scrambled eggs loaded with fiber-rich onions, tomatoes, and bell peppers.",
             ingredients: [
                 "3 whole eggs",
                 "1 medium onion, finely chopped",
                 "1 tomato, chopped",
-                "1/2 capsicum (bell pepper), diced",
-                "1/4 tsp turmeric and black pepper powder",
-                "1 tsp cooking oil or ghee",
-                "Fresh coriander leaves"
+                "1/2 capsicum, diced",
+                "Turmeric, black pepper, and salt",
+                "1 tsp ghee"
             ],
             steps: [
-                "Heat oil in a pan, sauté chopped onions until translucent.",
-                "Add diced capsicum and tomatoes, cooking until tender.",
-                "Crack eggs directly into the pan, add salt, turmeric, and black pepper.",
-                "Scramble continuously on medium heat until cooked to your preference. Garnish with coriander."
+                "Sauté chopped onions, capsicum, and tomatoes in a pan until tender.",
+                "Crack eggs directly into the vegetables.",
+                "Add salt, turmeric, and black pepper. Scramble until cooked."
             ]
         },
         {
-            id: 4, meal: "Breakfast", diet: "Non-Veg", name: "Spinach Egg White Omelet", gi: "Low GI", calories: "160 kcal",
+            id: 8, meal: "Breakfast", diet: "Non-Veg", name: "Spinach Egg White Omelet", gi: "Low GI", calories: "160 kcal",
             desc: "Light and fluffy egg white omelet packed with iron-rich sautéed spinach and herbs.",
             ingredients: [
-                "4 egg whites (1 whole egg optional)",
-                "1 cup fresh spinach leaves, chopped",
+                "4 egg whites",
+                "1 cup fresh spinach, chopped",
                 "1 clove garlic, minced",
-                "Pinch of cumin powder and black pepper",
-                "1 tsp olive oil or cold-pressed oil"
+                "Cumin powder, black pepper, and salt",
+                "1 tsp olive oil"
             ],
             steps: [
-                "Sauté minced garlic and chopped spinach in a pan with half a teaspoon of oil until wilted.",
-                "Whisk egg whites with black pepper, cumin powder, and a pinch of salt.",
-                "Pour egg whites over the spinach layer in the pan.",
-                "Cook on low heat until set, fold in half, and serve warm."
+                "Sauté garlic and spinach in oil until wilted.",
+                "Whisk egg whites with black pepper, cumin, and salt.",
+                "Pour over spinach, cook on low heat until set, fold and serve."
+            ]
+        },
+        {
+            id: 9, meal: "Breakfast", diet: "Non-Veg", name: "Chicken Keema Stuffed Multigrain Paratha", gi: "High Protein", calories: "290 kcal",
+            desc: "Wholesome multigrain flatbread stuffed with spiced lean minced chicken.",
+            ingredients: [
+                "1/2 cup lean minced chicken (cooked with ginger-garlic & spices)",
+                "Whole wheat and ragi dough ball",
+                "1 tsp ghee for roasting"
+            ],
+            steps: [
+                "Roll out small dough portion, place cooked chicken keema in center.",
+                "Seal edges, roll out gently into flatbread.",
+                "Roast on hot tawa with a few drops of ghee until golden spots appear."
+            ]
+        },
+        {
+            id: 10, meal: "Breakfast", diet: "Non-Veg", name: "Poached Eggs on Avocado & Tomato Toast", gi: "Low GI", calories: "250 kcal",
+            desc: "Healthy protein breakfast served on high-fiber toasted sourdough or multigrain bread.",
+            ingredients: [
+                "2 eggs",
+                "1 slice multigrain bread (toasted)",
+                "1/4 mashed avocado",
+                "Sliced tomatoes, black pepper, and salt"
+            ],
+            steps: [
+                "Toast multigrain bread and spread mashed avocado.",
+                "Poach eggs in simmering water for 3 minutes.",
+                "Place poached eggs on toast, top with sliced tomatoes and black pepper."
             ]
         },
 
-        // --- LUNCH : VEG ---
+        // ==================== LUNCH : VEG ====================
         {
-            id: 5, meal: "Lunch", diet: "Veg", name: "Lauki Chana Dal Sabzi with Jowar Roti", gi: "Low GI", calories: "320 kcal",
-            desc: "Nutritious bottle gourd and split bengal gram curry paired with wholesome sorghum flatbread.",
+            id: 11, meal: "Lunch", diet: "Veg", name: "Lauki Chana Dal Sabzi with Jowar Roti", gi: "Low GI", calories: "320 kcal",
+            desc: "Nutritious bottle gourd and split bengal gram curry paired with sorghum flatbread.",
             ingredients: [
                 "1 cup diced lauki (bottle gourd)",
                 "1/4 cup chana dal (soaked)",
-                "1 onion & 1 tomato, chopped",
-                "1/2 tsp turmeric, coriander powder, and garam masala",
+                "1 onion & 1 tomato",
+                "Turmeric, coriander powder, garam masala",
                 "2 Jowar rotis",
-                "Side of fresh cucumber and tomato salad"
+                "Cucumber salad"
             ],
             steps: [
-                "Pressure cook chana dal and lauki with turmeric and salt for 3 whistles until tender.",
-                "In a pan, sauté onions and tomatoes with spices to form a light masala base.",
-                "Mix the cooked dal-lauki mixture into the masala, simmer for 5 minutes.",
-                "Serve hot with 2 warm jowar rotis and raw salad."
+                "Pressure cook chana dal and lauki with turmeric and salt for 3 whistles.",
+                "Sauté onions and tomatoes with spices to form a light masala base.",
+                "Mix cooked dal-lauki into masala and simmer for 5 minutes. Serve with Jowar rotis."
             ]
         },
         {
-            id: 6, meal: "Lunch", diet: "Veg", name: "Palak Paneer with Brown Rice", gi: "Diabetic Friendly", calories: "350 kcal",
-            desc: "Cottage cheese cubes simmered in a smooth, spiced spinach gravy with unpolished brown rice.",
+            id: 12, meal: "Lunch", diet: "Veg", name: "Palak Paneer with Brown Rice", gi: "Diabetic Friendly", calories: "350 kcal",
+            desc: "Cottage cheese cubes simmered in a smooth, spiced spinach gravy with brown rice.",
             ingredients: [
                 "200g low-fat paneer cubes",
-                "2 cups fresh spinach leaves (blanched & pureed)",
-                "1 onion, 1 tomato paste",
-                "1 tsp garlic-ginger paste",
+                "2 cups spinach (blanched & pureed)",
+                "Onion-tomato paste & ginger-garlic",
                 "1/2 cup cooked brown rice",
-                "1 tsp ghee or mustard oil"
+                "1 tsp ghee"
             ],
             steps: [
-                "Blanch spinach leaves and blend into a smooth green puree.",
-                "Heat ghee in a pan, sauté ginger-garlic paste and onion paste until golden.",
-                "Add tomato paste and spices (cumin, coriander, pinch of garam masala).",
-                "Stir in spinach puree and paneer cubes, simmer for 5 minutes. Serve with brown rice."
-            ]
-        },
-
-        // --- LUNCH : NON-VEG ---
-        {
-            id: 7, meal: "Lunch", diet: "Non-Veg", name: "Homestyle Chicken Curry with Multigrain Roti", gi: "Low Glycemic", calories: "380 kcal",
-            desc: "Lean chicken breast cooked in a light onion-tomato gravy with minimal oil, paired with multigrain rotis.",
-            ingredients: [
-                "150g boneless chicken breast, cubed",
-                "1 onion & 1 tomato, finely chopped",
-                "1 tsp ginger-garlic paste",
-                "1/2 tsp turmeric, red chili powder, coriander powder",
-                "2 Multigrain rotis (wheat + ragi + besan)"
-            ],
-            steps: [
-                "Heat oil in a pan, sauté ginger-garlic paste and chopped onions until golden brown.",
-                "Add tomatoes and spice powders, cooking until oil separates slightly.",
-                "Add chicken cubes and sear well, then add 1/2 cup water, cover, and simmer until tender.",
-                "Serve hot alongside 2 warm multigrain rotis."
+                "Sauté ginger-garlic and onion paste in ghee, add tomato paste and spices.",
+                "Stir in spinach puree and paneer cubes, simmer for 5 minutes.",
+                "Serve warm alongside brown rice."
             ]
         },
         {
-            id: 8, meal: "Lunch", diet: "Non-Veg", name: "Baked Fish Curry with Brown Rice", gi: "Heart & Sugar Friendly", calories: "340 kcal",
-            desc: "Omega-3 rich fish fillet simmered in a tangy tamarind and tomato broth.",
+            id: 13, meal: "Lunch", diet: "Veg", name: "Karela (Bitter Gourd) Masala with Phulkas", gi: "Anti-Diabetic", calories: "280 kcal",
+            desc: "Crisp bitter gourd stir-fried with onions, fennel, and tangy amchur powder.",
             ingredients: [
-                "200g firm fish fillets (seer fish or rohu)",
-                "1 tomato and small lemon-sized tamarind extract",
-                "1/2 cup sliced shallots (small onions)",
-                "1/2 tsp mustard seeds, fenugreek seeds, and curry leaves",
-                "1/2 cup cooked brown rice"
-            ],
-            steps: [
-                "Sauté mustard seeds, fenugreek seeds, curry leaves, and shallots in 1 tsp oil.",
-                "Add tomato pulp, turmeric, coriander, and diluted tamarind extract; boil into a gravy.",
-                "Gently drop in fish fillets, cover, and simmer for 8-10 minutes until flaky.",
-                "Serve warm over a portion of brown rice."
-            ]
-        },
-
-        // --- DINNER : VEG ---
-        {
-            id: 9, meal: "Dinner", diet: "Veg", name: "Methi Dal Palak Soup & Stir-Fried Veggies", gi: "Very Low Carb", calories: "220 kcal",
-            desc: "Light, soothing lentil soup blended with fenugreek and spinach greens, served with sautéed vegetables.",
-            ingredients: [
-                "1/3 cup yellow moong dal",
-                "1 cup mixed chopped greens (methi and palak)",
-                "1/2 tsp cumin seeds and garlic cloves",
-                "1 cup mixed stir-fried broccoli, beans, and carrots"
-            ],
-            steps: [
-                "Pressure cook moong dal, chopped greens, turmeric, and garlic with 2 cups of water.",
-                "Temper with cumin seeds in a few drops of ghee.",
-                "Lightly stir-fry broccoli, beans, and carrots with black pepper and salt.",
-                "Enjoy together as a light, blood-sugar stable evening meal."
-            ]
-        },
-        {
-            id: 10, meal: "Dinner", diet: "Veg", name: "Stuffed Bhindi (Okra) with Phulkas", gi: "Low GI", calories: "260 kcal",
-            desc: "Tender okra slit and stuffed with aromatic roasted spices, cooked with minimal oil.",
-            ingredients: [
-                "200g fresh tender bhindi, slit lengthwise",
-                "Spices for stuffing: 1 tsp fennel powder, 1 tsp coriander powder, pinch of amchur, turmeric, and salt",
-                "1 tsp mustard or peanut oil",
+                "200g karela, sliced thin and salted to remove bitterness",
+                "1 large onion, sliced",
+                "Fennel seeds (saunf), turmeric, amchur powder",
                 "2 whole wheat phulkas"
             ],
             steps: [
-                "Mix all dry spice powders in a bowl.",
-                "Stuff the spice mixture gently inside the slit okra pods.",
-                "Heat oil in a pan, arrange stuffed bhindi, cover, and cook on low heat, turning occasionally until tender.",
-                "Serve with 2 light phulkas."
-            ]
-        },
-
-        // --- DINNER : NON-VEG ---
-        {
-            id: 11, meal: "Dinner", diet: "Non-Veg", name: "Grilled Herb Chicken Breast & Salad", gi: "Zero Sugar Spike", calories: "290 kcal",
-            desc: "Tender marinated chicken breast pan-grilled with herbs and served with a crisp cucumber-tomato salad.",
-            ingredients: [
-                "150g chicken breast",
-                "1 tsp lemon juice, black pepper, crushed garlic, and dried oregano",
-                "1 tsp olive oil",
-                "Large bowl of cucumber, carrot, and lettuce salad with lemon dressing"
-            ],
-            steps: [
-                "Marinate chicken breast with lemon juice, garlic, oregano, black pepper, and salt for 15 minutes.",
-                "Heat olive oil in a grill pan over medium heat.",
-                "Cook chicken for 5-6 minutes per side until golden brown and thoroughly cooked through.",
-                "Serve alongside a refreshing raw vegetable salad."
+                "Wash salted karela slices and squeeze dry.",
+                "Sauté sliced onions and karela in minimal oil until golden and tender.",
+                "Add fennel powder, turmeric, and amchur. Serve with phulkas."
             ]
         },
         {
-            id: 12, meal: "Dinner", diet: "Non-Veg", name: "Clear Chicken & Vegetable Soup", gi: "Low Calorie", calories: "210 kcal",
-            desc: "Nourishing, slow-simmered broth with shredded chicken, mushrooms, and leafy greens.",
+            id: 14, meal: "Lunch", diet: "Veg", name: "Methi Dal Tadka with Quinoa", gi: "High Fiber", calories: "310 kcal",
+            desc: "Yellow dal tempered with fresh fenugreek leaves and garlic, served over protein quinoa.",
             ingredients: [
-                "100g shredded boiled chicken",
-                "1 cup sliced mushrooms, baby corn, and bok choy or spinach",
-                "1 tbsp minced ginger and garlic",
-                "Crushed black pepper and soy sauce (low sodium)"
-            ],
-            steps: [
-                "Boil ginger, garlic, and chicken bones or shredded chicken in 3 cups of water for flavorful broth.",
-                "Add sliced mushrooms, baby corn, and greens into the simmering broth.",
-                "Season with crushed black pepper and salt.",
-                "Serve hot for an easy-to-digest, low-glycemic dinner."
-            ]
-        }
-    ];
-
-    var selectedMeal = 'Breakfast';
-    var selectedDiet = 'Veg';
-
-    function selectMeal(meal, event) {
-        selectedMeal = meal;
-        updateGroupActive('mealGroup', event.target);
-    }
-
-    function selectDiet(diet, event) {
-        selectedDiet = diet;
-        updateGroupActive('dietGroup', event.target);
-    }
-
-    function updateGroupActive(groupId, activeBtn) {
-        var group = document.getElementById(groupId);
-        var buttons = group.querySelectorAll('.select-btn');
-        buttons.forEach(b => b.classList.remove('active'));
-        activeBtn.classList.add('active');
-    }
-
-    function loadDishMenu() {
-        var container = document.getElementById('dishListContainer');
-        container.innerHTML = '';
-
-        var filtered = database.filter(r => r.meal === selectedMeal && r.diet === selectedDiet);
-        document.getElementById('menuCount').textContent = filtered.length;
-
-        if (filtered.length === 0) {
-            container.innerHTML = '<div class="detail-placeholder">No dishes found for this selection.</div>';
-            return;
-        }
-
-        filtered.forEach(recipe => {
-            var card = document.createElement('div');
-            card.className = 'dish-item-card';
-            card.innerHTML = 
-                '<h4>' + recipe.name + '</h4>' +
-                '<p>' + recipe.desc + '</p>' +
-                '<div class="tag-row">' +
-                    '<span class="tag tag-gi">' + recipe.gi + '</span>' +
-                    '<span class="tag">' + recipe.calories + '</span>' +
-                '</div>';
-
-            card.onclick = function() {
-                document.querySelectorAll('.dish-item-card').forEach(c => c.classList.remove('selected'));
-                card.classList.add('selected');
-                showRecipeDetails(recipe);
-            };
-
-            container.appendChild(card);
-        });
-
-        // Reset right panel prompt
-        document.getElementById('rightDetailPanel').innerHTML = `
-            <div class="panel-title">Recipe Details & Preparation</div>
-            <div class="detail-placeholder">
-                <div>👉 Click on any dish from the left menu to view ingredients and step-by-step instructions.</div>
-            </div>
-        `;
-    }
-
-    // Automatically load initial menu on page load so dishes appear immediately
-    window.onload = function() {
-        loadDishMenu();
-    };
-</script>
-
-</body>
-</html>
-
+                "1/2 cup yellow moong
