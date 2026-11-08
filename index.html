@@ -10,12 +10,10 @@
             --card-bg: #1e293b;
             --card-border: #334155;
             --primary: #38bdf8;
-            --primary-glow: rgba(56, 189, 248, 0.15);
             --success: #10b981;
             --accent: #f59e0b;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --input-bg: #0f172a;
         }
 
         * { box-sizing: border-box; color-scheme: dark; }
@@ -82,7 +80,7 @@
             transition: all 0.2s;
         }
 
-        .select-btn.active, .select-btn:hover {
+        .select-btn.active {
             background: var(--primary);
             color: #0f172a;
             border-color: var(--primary);
@@ -97,17 +95,14 @@
             font-weight: 700;
             border-radius: 10px;
             cursor: pointer;
-            transition: opacity 0.2s;
             height: 42px;
         }
         .action-submit-btn:hover { opacity: 0.9; }
 
-        /* Master-Detail Layout */
         .master-detail-grid {
             display: grid;
             grid-template-columns: 1fr 1.4fr;
             gap: 20px;
-            min-height: 520px;
         }
 
         @media (max-width: 900px) {
@@ -119,8 +114,6 @@
             border: 1px solid var(--card-border);
             border-radius: 14px;
             padding: 18px;
-            display: flex;
-            flex-direction: column;
             height: 560px;
             overflow-y: auto;
         }
@@ -154,7 +147,6 @@
         .dish-item-card:hover, .dish-item-card.selected {
             border-color: var(--primary);
             background: rgba(56, 189, 248, 0.08);
-            transform: translateX(2px);
         }
 
         .dish-item-card h4 { margin: 0 0 4px 0; font-size: 0.95rem; color: var(--text-main); }
@@ -164,7 +156,6 @@
         .tag { font-size: 0.65rem; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: rgba(56, 189, 248, 0.1); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.3); }
         .tag-gi { background: rgba(16, 185, 129, 0.1); color: var(--success); border-color: rgba(16, 185, 129, 0.3); }
 
-        /* Right Detail Panel Styles */
         .detail-placeholder {
             display: flex;
             flex-direction: column;
@@ -201,20 +192,20 @@
         <div class="control-group">
             <label>Meal Time</label>
             <div class="btn-group" id="mealGroup">
-                <button class="select-btn active" data-meal="Breakfast" onclick="selectMeal('Breakfast', event)">Breakfast</button>
-                <button class="select-btn" data-meal="Lunch" onclick="selectMeal('Lunch', event)">Lunch</button>
-                <button class="select-btn" data-meal="Dinner" onclick="selectMeal('Dinner', event)">Dinner</button>
+                <button type="button" class="select-btn active" onclick="setMeal('Breakfast', this)">Breakfast</button>
+                <button type="button" class="select-btn" onclick="setMeal('Lunch', this)">Lunch</button>
+                <button type="button" class="select-btn" onclick="setMeal('Dinner', this)">Dinner</button>
             </div>
         </div>
         <div class="control-group">
             <label>Dietary Preference</label>
             <div class="btn-group" id="dietGroup">
-                <button class="select-btn active" data-diet="Veg" onclick="selectDiet('Veg', event)">Veg</button>
-                <button class="select-btn" data-diet="Non-Veg" onclick="selectDiet('Non-Veg', event)">Non-Veg</button>
+                <button type="button" class="select-btn active" onclick="setDiet('Veg', this)">Veg</button>
+                <button type="button" class="select-btn" onclick="setDiet('Non-Veg', this)">Non-Veg</button>
             </div>
         </div>
         <div>
-            <button class="action-submit-btn" onclick="loadDishMenu()">See the Dish Menu</button>
+            <button type="button" class="action-submit-btn" onclick="loadDishMenu()">See the Dish Menu</button>
         </div>
     </div>
 
@@ -241,11 +232,11 @@
 </div>
 
 <script>
-    // Vast expanded database of diabetic-friendly Indian dishes across all combinations
-    var database = [
-        // ==================== BREAKFAST : VEG ====================
+    // Vast database covering Breakfast, Lunch, Dinner for both Veg and Non-Veg
+    var dishDatabase = [
+        // --- BREAKFAST : VEG ---
         {
-            id: 1, meal: "Breakfast", diet: "Veg", name: "Moong Dal & Vegetable Chilla", gi: "Low GI", calories: "180 kcal",
+            meal: "Breakfast", diet: "Veg", name: "Moong Dal & Vegetable Chilla", gi: "Low GI", calories: "180 kcal",
             desc: "High protein savory pancake made from split yellow lentils and finely chopped vegetables.",
             ingredients: [
                 "1 cup Yellow Moong Dal (soaked for 2 hours)",
@@ -264,7 +255,7 @@
             ]
         },
         {
-            id: 2, meal: "Breakfast", diet: "Veg", name: "Oats & Methi Uttapam", gi: "High Fiber", calories: "210 kcal",
+            meal: "Breakfast", diet: "Veg", name: "Oats & Methi Uttapam", gi: "High Fiber", calories: "210 kcal",
             desc: "Heart-healthy savory pancakes made with rolled oats and fresh fenugreek leaves.",
             ingredients: [
                 "1 cup rolled oats (ground to coarse flour)",
@@ -282,7 +273,7 @@
             ]
         },
         {
-            id: 3, meal: "Breakfast", diet: "Veg", name: "Ragi & Sprouted Rava Puttu", gi: "Low GI", calories: "220 kcal",
+            meal: "Breakfast", diet: "Veg", name: "Ragi & Sprouted Rava Puttu", gi: "Low GI", calories: "220 kcal",
             desc: "Nutritious steamed finger millet breakfast rich in calcium and low glycemic index.",
             ingredients: [
                 "1 cup ragi flour (finger millet)",
@@ -297,7 +288,7 @@
             ]
         },
         {
-            id: 4, meal: "Breakfast", diet: "Veg", name: "Besan Pyaaz Pweda (Cheela)", gi: "Low Carb", calories: "190 kcal",
+            meal: "Breakfast", diet: "Veg", name: "Besan Pyaaz Cheela", gi: "Low Carb", calories: "190 kcal",
             desc: "Gram flour pancakes loaded with onions, green chilies, and fresh coriander.",
             ingredients: [
                 "1 cup besan (gram flour)",
@@ -313,7 +304,7 @@
             ]
         },
         {
-            id: 5, meal: "Breakfast", diet: "Veg", name: "Quinoa Vegetable Poha", gi: "Diabetic Superfood", calories: "205 kcal",
+            meal: "Breakfast", diet: "Veg", name: "Quinoa Vegetable Poha", gi: "Diabetic Superfood", calories: "205 kcal",
             desc: "Protein-rich twist on traditional flattened rice using protein-packed quinoa.",
             ingredients: [
                 "1 cup cooked quinoa (fluffy)",
@@ -331,7 +322,7 @@
             ]
         },
         {
-            id: 6, meal: "Breakfast", diet: "Veg", name: "Sprouts & Paneer Salad Bowl", gi: "Zero Spike", calories: "230 kcal",
+            meal: "Breakfast", diet: "Veg", name: "Sprouts & Paneer Salad Bowl", gi: "Zero Spike", calories: "230 kcal",
             desc: "Mixed sprouted moong and moth beans tossed with crumbled paneer and zesty spices.",
             ingredients: [
                 "1 cup mixed boiled sprouts",
@@ -346,9 +337,9 @@
             ]
         },
 
-        // ==================== BREAKFAST : NON-VEG ====================
+        // --- BREAKFAST : NON-VEG ---
         {
-            id: 7, meal: "Breakfast", diet: "Non-Veg", name: "Masala Vegetable Egg Bhurji", gi: "Low Carb", calories: "220 kcal",
+            meal: "Breakfast", diet: "Non-Veg", name: "Masala Vegetable Egg Bhurji", gi: "Low Carb", calories: "220 kcal",
             desc: "Protein-packed scrambled eggs loaded with fiber-rich onions, tomatoes, and bell peppers.",
             ingredients: [
                 "3 whole eggs",
@@ -365,7 +356,7 @@
             ]
         },
         {
-            id: 8, meal: "Breakfast", diet: "Non-Veg", name: "Spinach Egg White Omelet", gi: "Low GI", calories: "160 kcal",
+            meal: "Breakfast", diet: "Non-Veg", name: "Spinach Egg White Omelet", gi: "Low GI", calories: "160 kcal",
             desc: "Light and fluffy egg white omelet packed with iron-rich sautéed spinach and herbs.",
             ingredients: [
                 "4 egg whites",
@@ -381,7 +372,7 @@
             ]
         },
         {
-            id: 9, meal: "Breakfast", diet: "Non-Veg", name: "Chicken Keema Stuffed Multigrain Paratha", gi: "High Protein", calories: "290 kcal",
+            meal: "Breakfast", diet: "Non-Veg", name: "Chicken Keema Stuffed Multigrain Paratha", gi: "High Protein", calories: "290 kcal",
             desc: "Wholesome multigrain flatbread stuffed with spiced lean minced chicken.",
             ingredients: [
                 "1/2 cup lean minced chicken (cooked with ginger-garlic & spices)",
@@ -395,7 +386,7 @@
             ]
         },
         {
-            id: 10, meal: "Breakfast", diet: "Non-Veg", name: "Poached Eggs on Avocado & Tomato Toast", gi: "Low GI", calories: "250 kcal",
+            meal: "Breakfast", diet: "Non-Veg", name: "Poached Eggs on Avocado & Tomato Toast", gi: "Low GI", calories: "250 kcal",
             desc: "Healthy protein breakfast served on high-fiber toasted sourdough or multigrain bread.",
             ingredients: [
                 "2 eggs",
@@ -410,9 +401,9 @@
             ]
         },
 
-        // ==================== LUNCH : VEG ====================
+        // --- LUNCH : VEG ---
         {
-            id: 11, meal: "Lunch", diet: "Veg", name: "Lauki Chana Dal Sabzi with Jowar Roti", gi: "Low GI", calories: "320 kcal",
+            meal: "Lunch", diet: "Veg", name: "Lauki Chana Dal Sabzi with Jowar Roti", gi: "Low GI", calories: "320 kcal",
             desc: "Nutritious bottle gourd and split bengal gram curry paired with sorghum flatbread.",
             ingredients: [
                 "1 cup diced lauki (bottle gourd)",
@@ -429,7 +420,7 @@
             ]
         },
         {
-            id: 12, meal: "Lunch", diet: "Veg", name: "Palak Paneer with Brown Rice", gi: "Diabetic Friendly", calories: "350 kcal",
+            meal: "Lunch", diet: "Veg", name: "Palak Paneer with Brown Rice", gi: "Diabetic Friendly", calories: "350 kcal",
             desc: "Cottage cheese cubes simmered in a smooth, spiced spinach gravy with brown rice.",
             ingredients: [
                 "200g low-fat paneer cubes",
@@ -445,7 +436,7 @@
             ]
         },
         {
-            id: 13, meal: "Lunch", diet: "Veg", name: "Karela (Bitter Gourd) Masala with Phulkas", gi: "Anti-Diabetic", calories: "280 kcal",
+            meal: "Lunch", diet: "Veg", name: "Karela (Bitter Gourd) Masala with Phulkas", gi: "Anti-Diabetic", calories: "280 kcal",
             desc: "Crisp bitter gourd stir-fried with onions, fennel, and tangy amchur powder.",
             ingredients: [
                 "200g karela, sliced thin and salted to remove bitterness",
@@ -460,5 +451,21 @@
             ]
         },
         {
-            id: 14, meal: "Lunch", diet: "Veg", name: "Methi Dal Tadka with Quinoa", gi: "High Fiber", calories: "310 kcal",
-            desc: "Yellow dal tempered with fresh fenugreek leaves and garlic,
+            meal: "Lunch", diet: "Veg", name: "Methi Dal Tadka with Quinoa", gi: "High Fiber", calories: "310 kcal",
+            desc: "Yellow dal tempered with fresh fenugreek leaves and garlic, served over protein quinoa.",
+            ingredients: [
+                "1/2 cup yellow moong & masoor dal",
+                "1 cup fresh methi leaves",
+                "Garlic cloves, cumin, ghee tempering",
+                "1/2 cup cooked quinoa"
+            ],
+            steps: [
+                "Boil dals with turmeric and salt until soft.",
+                "Sauté chopped methi leaves and garlic in ghee, pour over dal.",
+                "Serve hot over a bed of fluffy quinoa."
+            ]
+        },
+
+        // --- LUNCH : NON-VEG ---
+        {
+            meal: "Lunch", diet: "Non-Veg"
