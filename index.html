@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SwasthyaPlate - Diabetic-Friendly Indian Meal Planner</title>
+    <title>SwasthyaPlate India - Diabetic-Friendly Indian Meal Planner</title>
     <style>
         :root {
             --bg: #0f172a;
@@ -32,7 +32,7 @@
 
         .dashboard {
             width: 100%;
-            max-width: 1100px;
+            max-width: 1200px;
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 20px;
@@ -48,13 +48,15 @@
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid var(--card-border);
             border-radius: 14px;
-            padding: 16px;
+            padding: 20px;
             margin-bottom: 24px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
         }
 
+        .control-group { flex: 1; min-width: 220px; }
         .control-group label {
             display: block;
             font-size: 0.75rem;
@@ -65,18 +67,15 @@
             margin-bottom: 8px;
         }
 
-        .btn-group {
-            display: flex;
-            gap: 6px;
-        }
+        .btn-group { display: flex; gap: 8px; }
 
         .select-btn {
             flex: 1;
             background: #0f172a;
             border: 1px solid var(--card-border);
             color: var(--text-muted);
-            padding: 8px 10px;
-            font-size: 0.8rem;
+            padding: 10px;
+            font-size: 0.85rem;
             font-weight: 600;
             border-radius: 8px;
             cursor: pointer;
@@ -89,88 +88,99 @@
             border-color: var(--primary);
         }
 
-        .section-label {
-            font-size: 0.85rem;
+        .action-submit-btn {
+            background: var(--success);
+            color: #0f172a;
+            border: none;
+            padding: 11px 24px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            height: 42px;
+        }
+        .action-submit-btn:hover { opacity: 0.9; }
+
+        /* Master-Detail Layout */
+        .master-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 20px;
+            min-height: 480px;
+        }
+
+        @media (max-width: 900px) {
+            .master-detail-grid { grid-template-columns: 1fr; }
+        }
+
+        .panel-box {
+            background: #0f172a;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            max-height: 520px;
+            overflow-y: auto;
+        }
+
+        .panel-title {
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             color: var(--primary);
             font-weight: 700;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--card-border);
         }
 
-        .recipes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .recipe-card {
-            background: #0f172a;
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
+        .dish-list {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            gap: 10px;
         }
 
-        .recipe-card:hover { border-color: var(--primary); transform: translateY(-2px); }
-
-        .recipe-card h4 { margin: 0 0 6px 0; font-size: 1rem; color: var(--text-main); display: flex; justify-content: space-between; align-items: center; }
-        .recipe-card p { margin: 0 0 12px 0; font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
-
-        .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-        .tag { font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: rgba(56, 189, 248, 0.1); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.3); }
-        .tag-gi { background: rgba(16, 185, 129, 0.1); color: var(--success); border-color: rgba(16, 185, 129, 0.3); }
-
-        .view-btn {
-            background: transparent;
+        .dish-item-card {
+            background: rgba(30, 41, 59, 0.7);
             border: 1px solid var(--card-border);
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 6px 12px;
-            border-radius: 8px;
-            text-align: center;
+            border-radius: 10px;
+            padding: 14px;
+            cursor: pointer;
             transition: all 0.2s;
         }
-        .recipe-card:hover .view-btn { background: var(--primary); color: #0f172a; border-color: var(--primary); }
 
-        /* Modal Overlay for Recipe Details */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.85);
-            display: none;
+        .dish-item-card:hover, .dish-item-card.selected {
+            border-color: var(--primary);
+            background: rgba(56, 189, 248, 0.08);
+            transform: translateX(2px);
+        }
+
+        .dish-item-card h4 { margin: 0 0 4px 0; font-size: 0.95rem; color: var(--text-main); }
+        .dish-item-card p { margin: 0; font-size: 0.78rem; color: var(--text-muted); }
+
+        .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+        .tag { font-size: 0.65rem; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: rgba(56, 189, 248, 0.1); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.3); }
+        .tag-gi { background: rgba(16, 185, 129, 0.1); color: var(--success); border-color: rgba(16, 185, 129, 0.3); }
+
+        /* Right Detail Panel Styles */
+        .detail-placeholder {
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 100;
-            padding: 16px;
+            height: 100%;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 40px;
+            font-size: 0.9rem;
         }
-        .modal-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 24px;
-            width: 100%;
-            max-width: 650px;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-        .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; }
-        .modal-header h3 { margin: 0; font-size: 1.3rem; color: var(--primary); }
-        .close-btn { background: none; border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer; }
-        .close-btn:hover { color: var(--text-main); }
 
-        .recipe-section-title { font-size: 0.85rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin: 16px 0 8px 0; }
-        .recipe-detail-box ul, .recipe-detail-box ol { margin: 0; padding-left: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
-        .recipe-detail-box li { margin-bottom: 6px; color: var(--text-main); }
+        .recipe-detail-content h3 { margin: 0 0 10px 0; font-size: 1.2rem; color: var(--text-main); }
+        .recipe-section-title { font-size: 0.8rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin: 16px 0 8px 0; }
+        .recipe-detail-content ul, .recipe-detail-content ol { margin: 0; padding-left: 20px; font-size: 0.84rem; color: var(--text-muted); line-height: 1.6; }
+        .recipe-detail-content li { margin-bottom: 6px; color: var(--text-main); }
     </style>
 </head>
 <body>
@@ -178,68 +188,58 @@
 <div class="dashboard">
     <div class="header">
         <h2>🥗 SwasthyaPlate India</h2>
-        <p>Diabetic-Friendly Indian Cuisine Meal Planner & Recipe Guide</p>
+        <p>Diabetic-Friendly Indian Cuisine Menu & Recipe Explorer</p>
     </div>
 
-    <!-- Control Panel Selection Filters -->
+    <!-- Control Panel -->
     <div class="control-panel">
         <div class="control-group">
             <label>Meal Time</label>
-            <div class="btn-group">
-                <button class="select-btn active" onclick="setMeal('Breakfast', event)">Breakfast</button>
-                <button class="select-btn" onclick="setMeal('Lunch', event)">Lunch</button>
-                <button class="select-btn" onclick="setMeal('Dinner', event)">Dinner</button>
+            <div class="btn-group" id="mealGroup">
+                <button class="select-btn active" onclick="selectMeal('Breakfast', event)">Breakfast</button>
+                <button class="select-btn" onclick="selectMeal('Lunch', event)">Lunch</button>
+                <button class="select-btn" onclick="selectMeal('Dinner', event)">Dinner</button>
             </div>
         </div>
         <div class="control-group">
             <label>Dietary Preference</label>
-            <div class="btn-group">
-                <button class="select-btn active" onclick="setDiet('Veg', event)">Veg</button>
-                <button class="select-btn" onclick="setDiet('Non-Veg', event)">Non-Veg</button>
+            <div class="btn-group" id="dietGroup">
+                <button class="select-btn active" onclick="selectDiet('Veg', event)">Veg</button>
+                <button class="select-btn" onclick="selectDiet('Non-Veg', event)">Non-Veg</button>
             </div>
+        </div>
+        <div>
+            <button class="action-submit-btn" onclick="loadDishMenu()">See the Dish Menu</button>
         </div>
     </div>
 
-    <!-- Recipe Display Section -->
-    <div class="section-label">
-        <span>Recommended Recipes for <span id="activeSelectionLabel">Breakfast • Veg</span></span>
-        <span style="font-size: 0.75rem; color: var(--text-muted);">Low GI & Balanced Macros</span>
-    </div>
-
-    <div class="recipes-grid" id="recipesGrid"></div>
-</div>
-
-<!-- Recipe Details Modal -->
-<div class="modal-overlay" id="recipeModal" onclick="if(event.target === this) closeModal()">
-    <div class="modal-card">
-        <div class="modal-header">
-            <div>
-                <h3 id="modalTitle">Dish Name</h3>
-                <div class="tag-row" id="modalTags" style="margin-top: 8px; margin-bottom: 0;"></div>
+    <!-- Master-Detail Split Screen -->
+    <div class="master-detail-grid">
+        <!-- Left Panel: List of Dishes -->
+        <div class="panel-box">
+            <div class="panel-title">Dish Menu (<span id="menuCount">0</span>)</div>
+            <div class="dish-list" id="dishListContainer">
+                <div class="detail-placeholder">Select your preferences above and click <strong>"See the Dish Menu"</strong> to view available dishes.</div>
             </div>
-            <button class="close-btn" onclick="closeModal()">&times;</button>
         </div>
-        <div class="recipe-detail-box">
-            <div class="recipe-section-title">Ingredients</div>
-            <ul id="modalIngredients"></ul>
 
-            <div class="recipe-section-title">Preparation Steps</div>
-            <ol id="modalSteps"></ol>
+        <!-- Right Panel: Ingredients & Preparation -->
+        <div class="panel-box" id="rightDetailPanel">
+            <div class="detail-placeholder">
+                <div>
+                    <div style="font-size: 2rem; margin-bottom: 8px;">📖</div>
+                    Select a dish from the menu on the left to view its ingredients and preparation steps here.
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    // Comprehensive Diabetic-Friendly Indian Recipe Database
     var database = [
         // --- BREAKFAST : VEG ---
         {
-            id: 1,
-            meal: "Breakfast",
-            diet: "Veg",
-            name: "Moong Dal & Vegetable Chilla",
-            gi: "Low GI",
-            calories: "180 kcal",
+            id: 1, meal: "Breakfast", diet: "Veg", name: "Moong Dal & Vegetable Chilla", gi: "Low GI", calories: "180 kcal",
             desc: "High protein savory pancake made from split yellow lentils and finely chopped vegetables.",
             ingredients: [
                 "1 cup Yellow Moong Dal (soaked for 2 hours)",
@@ -258,12 +258,7 @@
             ]
         },
         {
-            id: 2,
-            meal: "Breakfast",
-            diet: "Veg",
-            name: "Oats & Methi Uttapam",
-            gi: "High Fiber",
-            calories: "210 kcal",
+            id: 2, meal: "Breakfast", diet: "Veg", name: "Oats & Methi Uttapam", gi: "High Fiber", calories: "210 kcal",
             desc: "Heart-healthy savory pancakes made with rolled oats and fresh fenugreek leaves.",
             ingredients: [
                 "1 cup rolled oats (ground to coarse flour)",
@@ -283,12 +278,7 @@
 
         // --- BREAKFAST : NON-VEG ---
         {
-            id: 3,
-            meal: "Breakfast",
-            diet: "Non-Veg",
-            name: "Masala Vegetable Egg Bhurji",
-            gi: "Low Carb",
-            calories: "220 kcal",
+            id: 3, meal: "Breakfast", diet: "Non-Veg", name: "Masala Vegetable Egg Bhurji", gi: "Low Carb", calories: "220 kcal",
             desc: "Protein-packed scrambled eggs loaded with fiber-rich onions, tomatoes, and bell peppers.",
             ingredients: [
                 "3 whole eggs",
@@ -307,12 +297,7 @@
             ]
         },
         {
-            id: 4,
-            meal: "Breakfast",
-            diet: "Non-Veg",
-            name: "Spinach Egg White Omelet",
-            gi: "Low GI",
-            calories: "160 kcal",
+            id: 4, meal: "Breakfast", diet: "Non-Veg", name: "Spinach Egg White Omelet", gi: "Low GI", calories: "160 kcal",
             desc: "Light and fluffy egg white omelet packed with iron-rich sautéed spinach and herbs.",
             ingredients: [
                 "4 egg whites (1 whole egg optional)",
@@ -331,12 +316,7 @@
 
         // --- LUNCH : VEG ---
         {
-            id: 5,
-            meal: "Lunch",
-            diet: "Veg",
-            name: "Lauki Chana Dal Sabzi with Jowar Roti",
-            gi: "Low GI",
-            calories: "320 kcal",
+            id: 5, meal: "Lunch", diet: "Veg", name: "Lauki Chana Dal Sabzi with Jowar Roti", gi: "Low GI", calories: "320 kcal",
             desc: "Nutritious bottle gourd and split bengal gram curry paired with wholesome sorghum flatbread.",
             ingredients: [
                 "1 cup diced lauki (bottle gourd)",
@@ -354,12 +334,7 @@
             ]
         },
         {
-            id: 6,
-            meal: "Lunch",
-            diet: "Veg",
-            name: "Palak Paneer with Brown Rice",
-            gi: "Diabetic Friendly",
-            calories: "350 kcal",
+            id: 6, meal: "Lunch", diet: "Veg", name: "Palak Paneer with Brown Rice", gi: "Diabetic Friendly", calories: "350 kcal",
             desc: "Cottage cheese cubes simmered in a smooth, spiced spinach gravy with unpolished brown rice.",
             ingredients: [
                 "200g low-fat paneer cubes",
@@ -379,12 +354,7 @@
 
         // --- LUNCH : NON-VEG ---
         {
-            id: 7,
-            meal: "Lunch",
-            diet: "Non-Veg",
-            name: "Homestyle Chicken Curry with Multigrain Roti",
-            gi: "Low Glycemic",
-            calories: "380 kcal",
+            id: 7, meal: "Lunch", diet: "Non-Veg", name: "Homestyle Chicken Curry with Multigrain Roti", gi: "Low Glycemic", calories: "380 kcal",
             desc: "Lean chicken breast cooked in a light onion-tomato gravy with minimal oil, paired with multigrain rotis.",
             ingredients: [
                 "150g boneless chicken breast, cubed",
@@ -401,12 +371,7 @@
             ]
         },
         {
-            id: 8,
-            meal: "Lunch",
-            diet: "Non-Veg",
-            name: "Baked Fish Curry with Quinoa / Brown Rice",
-            gi: "Heart & Sugar Friendly",
-            calories: "340 kcal",
+            id: 8, meal: "Lunch", diet: "Non-Veg", name: "Baked Fish Curry with Brown Rice", gi: "Heart & Sugar Friendly", calories: "340 kcal",
             desc: "Omega-3 rich fish fillet simmered in a tangy tamarind and tomato broth.",
             ingredients: [
                 "200g firm fish fillets (seer fish or rohu)",
@@ -425,12 +390,7 @@
 
         // --- DINNER : VEG ---
         {
-            id: 9,
-            meal: "Dinner",
-            diet: "Veg",
-            name: "Methi Dal Palak Soup & Stir-Fried Veggies",
-            gi: "Very Low Carb",
-            calories: "220 kcal",
+            id: 9, meal: "Dinner", diet: "Veg", name: "Methi Dal Palak Soup & Stir-Fried Veggies", gi: "Very Low Carb", calories: "220 kcal",
             desc: "Light, soothing lentil soup blended with fenugreek and spinach greens, served with sautéed vegetables.",
             ingredients: [
                 "1/3 cup yellow moong dal",
@@ -446,12 +406,7 @@
             ]
         },
         {
-            id: 10,
-            meal: "Dinner",
-            diet: "Veg",
-            name: "Stuffed Bhindi (Okra) with Phulkas",
-            gi: "Low GI",
-            calories: "260 kcal",
+            id: 10, meal: "Dinner", diet: "Veg", name: "Stuffed Bhindi (Okra) with Phulkas", gi: "Low GI", calories: "260 kcal",
             desc: "Tender okra slit and stuffed with aromatic roasted spices, cooked with minimal oil.",
             ingredients: [
                 "200g fresh tender bhindi, slit lengthwise",
@@ -469,15 +424,26 @@
 
         // --- DINNER : NON-VEG ---
         {
-            id: 11,
-            meal: "Dinner",
-            diet: "Non-Veg",
-            name: "Grilled Herb Chicken Breast & Salad",
-            gi: "Zero Sugar Spike",
-            calories: "290 kcal",
+            id: 11, meal: "Dinner", diet: "Non-Veg", name: "Grilled Herb Chicken Breast & Salad", gi: "Zero Sugar Spike", calories: "290 kcal",
             desc: "Tender marinated chicken breast pan-grilled with herbs and served with a crisp cucumber-tomato salad.",
             ingredients: [
                 "150g chicken breast",
                 "1 tsp lemon juice, black pepper, crushed garlic, and dried oregano",
                 "1 tsp olive oil",
-                "Large bowl 
+                "Large bowl of cucumber, carrot, and lettuce salad with lemon dressing"
+            ],
+            steps: [
+                "Marinate chicken breast with lemon juice, garlic, oregano, black pepper, and salt for 15 minutes.",
+                "Heat olive oil in a grill pan over medium heat.",
+                "Cook chicken for 5-6 minutes per side until golden brown and thoroughly cooked through.",
+                "Serve alongside a refreshing raw vegetable salad."
+            ]
+        },
+        {
+            id: 12, meal: "Dinner", diet: "Non-Veg", name: "Clear Chicken & Vegetable Soup", gi: "Low Calorie", calories: "210 kcal",
+            desc: "Nourishing, slow-simmered broth with shredded chicken, mushrooms, and leafy greens.",
+            ingredients: [
+                "100g shredded boiled chicken",
+                "1 cup sliced mushrooms, baby corn, and bok choy or spinach",
+                "1 tbsp minced ginger and garlic",
+                "Crushed black
