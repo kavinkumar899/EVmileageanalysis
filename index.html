@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EV vs Fuel Operational & Savings Analytics (TN LT-1A Tariff)</title>
+    <title>SwasthyaPlate - Diabetic-Friendly Indian Meal Planner</title>
     <style>
         :root {
             --bg: #0f172a;
@@ -12,7 +12,7 @@
             --primary: #38bdf8;
             --primary-glow: rgba(56, 189, 248, 0.15);
             --success: #10b981;
-            --success-glow: rgba(16, 185, 129, 0.15);
+            --accent: #f59e0b;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --input-bg: #0f172a;
@@ -32,11 +32,11 @@
 
         .dashboard {
             width: 100%;
-            max-width: 960px;
+            max-width: 1100px;
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 20px;
-            padding: 28px 24px;
+            padding: 24px;
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
         }
 
@@ -44,415 +44,440 @@
         .header h2 { margin: 0; font-size: 1.6rem; color: var(--primary); font-weight: 800; }
         .header p { margin: 6px 0 0 0; font-size: 0.85rem; color: var(--text-muted); }
 
-        .master-grid {
+        .control-panel {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 24px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
         }
 
-        @media (max-width: 768px) {
-            .master-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .section-label {
+        .control-group label {
+            display: block;
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             color: var(--primary);
             font-weight: 700;
-            margin: 16px 0 8px 0;
+            margin-bottom: 8px;
         }
 
-        .form-group { margin-bottom: 12px; }
-        label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 6px; color: var(--text-main); }
-        
-        input, select {
-            width: 100%;
-            padding: 11px 14px;
-            font-size: 0.95rem;
-            border: 1px solid var(--card-border);
-            border-radius: 10px;
-            background-color: var(--input-bg);
-            color: var(--text-main);
-            outline: none;
-        }
-        input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
-
-        .grid-2 { display: flex; gap: 12px; }
-        .grid-2 > div { flex: 1; min-width: 0; }
-
-        .car-visual-card {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 14px;
+        .btn-group {
             display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-top: 14px;
+            gap: 6px;
         }
 
-        .car-icon-box {
-            width: 52px;
-            height: 52px;
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .car-icon-box svg {
-            width: 28px;
-            height: 28px;
-            fill: var(--primary);
-        }
-
-        .car-preview-details {
-            font-size: 0.82rem;
-            line-height: 1.4;
-            color: var(--text-muted);
-        }
-
-        .car-preview-details strong {
-            color: var(--text-main);
-            font-size: 0.9rem;
-            display: block;
-            margin-bottom: 2px;
-        }
-
-        .panel-right {
+        .select-btn {
+            flex: 1;
             background: #0f172a;
             border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 20px;
+            color: var(--text-muted);
+            padding: 8px 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .select-btn.active, .select-btn:hover {
+            background: var(--primary);
+            color: #0f172a;
+            border-color: var(--primary);
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .recipe-card {
+            background: #0f172a;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
-        .metric-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 7px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.88rem;
-        }
-        .metric-row span { color: var(--text-muted); }
-        .metric-row strong { color: var(--text-main); font-weight: 700; }
+        .recipe-card:hover { border-color: var(--primary); transform: translateY(-2px); }
 
-        .hero-savings {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 12px;
-            padding: 16px;
-            margin-top: 14px;
+        .recipe-card h4 { margin: 0 0 6px 0; font-size: 1rem; color: var(--text-main); display: flex; justify-content: space-between; align-items: center; }
+        .recipe-card p { margin: 0 0 12px 0; font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+
+        .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+        .tag { font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: rgba(56, 189, 248, 0.1); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.3); }
+        .tag-gi { background: rgba(16, 185, 129, 0.1); color: var(--success); border-color: rgba(16, 185, 129, 0.3); }
+
+        .view-btn {
+            background: transparent;
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 8px;
             text-align: center;
+            transition: all 0.2s;
         }
-        .hero-savings small { color: var(--success); font-weight: 700; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em; }
-        .hero-savings .amount { display: block; font-size: 1.6rem; font-weight: 800; color: var(--success); margin-top: 4px; }
+        .recipe-card:hover .view-btn { background: var(--primary); color: #0f172a; border-color: var(--primary); }
 
-        .visual-horizon { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
-        .horizon-item { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 8px 10px; }
-        .horizon-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; margin-bottom: 4px; }
-        .horizon-title { font-weight: 700; color: var(--text-main); }
-        .horizon-badge { background: rgba(16, 185, 129, 0.2); color: var(--success); font-size: 0.68rem; padding: 1px 6px; border-radius: 10px; font-weight: 600; }
-        .horizon-value { font-weight: 800; color: var(--success); }
-        .progress-track { height: 8px; background: #1e293b; border-radius: 4px; overflow: hidden; width: 100%; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, #10b981 0%, #34d399 100%); border-radius: 4px; }
+        /* Modal Overlay for Recipe Details */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 16px;
+        }
+        .modal-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            width: 100%;
+            max-width: 650px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; }
+        .modal-header h3 { margin: 0; font-size: 1.3rem; color: var(--primary); }
+        .close-btn { background: none; border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer; }
+        .close-btn:hover { color: var(--text-main); }
 
-        hr { border: 0; border-top: 1px solid var(--card-border); margin: 16px 0; }
+        .recipe-section-title { font-size: 0.85rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin: 16px 0 8px 0; }
+        .recipe-detail-box ul, .recipe-detail-box ol { margin: 0; padding-left: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+        .recipe-detail-box li { margin-bottom: 6px; color: var(--text-main); }
     </style>
 </head>
 <body>
 
 <div class="dashboard">
     <div class="header">
-        <h2>⚡ EV vs. Fuel Cost Analytics</h2>
-        <p>Tamil Nadu TANGEDCO Domestic LT-1A Tariff Calculator & Coimbatore On-Road Pricing</p>
+        <h2>🥗 SwasthyaPlate India</h2>
+        <p>Diabetic-Friendly Indian Cuisine Meal Planner & Recipe Guide</p>
     </div>
 
-    <div class="master-grid">
-        <!-- Left Column: Inputs & Vehicle Config -->
-        <div>
-            <div class="section-label" style="margin-top:0;">1. Usage Parameters</div>
-            <div class="form-group">
-                <label>Monthly Distance Travelled (km)</label>
-                <input type="number" id="monthlyKm" value="1500" oninput="runCalculation()">
-            </div>
-
-            <div class="grid-2">
-                <div class="form-group">
-                    <label>Fuel Price (₹ / L)</label>
-                    <input type="number" id="fuelPrice" value="102" oninput="runCalculation()">
-                </div>
-                <div class="form-group">
-                    <label>Fuel Mileage (km / L)</label>
-                    <input type="number" id="fuelMileage" value="14" oninput="runCalculation()">
-                </div>
-            </div>
-
-            <hr>
-
-            <div class="section-label">2. Vehicle Configuration</div>
-            <div class="grid-2">
-                <div class="form-group">
-                    <label>EV Manufacturer</label>
-                    <select id="brandSelect" onchange="updateSubModels()"></select>
-                </div>
-                <div class="form-group">
-                    <label>Model Variant</label>
-                    <select id="modelSelect" onchange="runCalculation()"></select>
-                </div>
-            </div>
-
-            <!-- Vehicle Preview Card with Coimbatore On-Road Price -->
-            <div class="car-visual-card">
-                <div class="car-icon-box">
-                    <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.04 3H5.81l1.04-3zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-                </div>
-                <div class="car-preview-details" id="specInfo">
-                    Loading vehicle specs...
-                </div>
+    <!-- Control Panel Selection Filters -->
+    <div class="control-panel">
+        <div class="control-group">
+            <label>Meal Time</label>
+            <div class="btn-group">
+                <button class="select-btn active" onclick="setMeal('Breakfast', event)">Breakfast</button>
+                <button class="select-btn" onclick="setMeal('Lunch', event)">Lunch</button>
+                <button class="select-btn" onclick="setMeal('Dinner', event)">Dinner</button>
             </div>
         </div>
-
-        <!-- Right Column: Financial Breakdown & 5-Year Horizon Chart -->
-        <div class="panel-right">
-            <div>
-                <div class="section-label" style="margin-top:0;">Monthly Operational Breakdown</div>
-                
-                <div class="metric-row"><span>Electricity Needed:</span><strong id="monthlyUnits">0 kWh</strong></div>
-                <div class="metric-row"><span>Effective TN Rate:</span><strong id="dynamicRate">₹0.00 / unit</strong></div>
-                <div class="metric-row"><span>EV Charging Cost:</span><strong id="evCost">₹0</strong></div>
-                <div class="metric-row"><span>ICE Fuel Cost:</span><strong id="fuelCost">₹0</strong></div>
-
-                <div class="hero-savings">
-                    <small>Estimated Net Annual Savings</small>
-                    <span class="amount" id="yearlySavings">₹0</span>
-                </div>
+        <div class="control-group">
+            <label>Dietary Preference</label>
+            <div class="btn-group">
+                <button class="select-btn active" onclick="setDiet('Veg', event)">Veg</button>
+                <button class="select-btn" onclick="setDiet('Non-Veg', event)">Non-Veg</button>
             </div>
+        </div>
+    </div>
 
+    <!-- Recipe Display Section -->
+    <div class="section-label">
+        <span>Recommended Recipes for <span id="activeSelectionLabel">Breakfast • Veg</span></span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">Low GI & Balanced Macros</span>
+    </div>
+
+    <div class="recipes-grid" id="recipesGrid"></div>
+</div>
+
+<!-- Recipe Details Modal -->
+<div class="modal-overlay" id="recipeModal" onclick="if(event.target === this) closeModal()">
+    <div class="modal-card">
+        <div class="modal-header">
             <div>
-                <div class="section-label" style="margin-bottom: 6px;">5-Year Savings Horizon</div>
-                <div class="visual-horizon" id="visualHorizon"></div>
+                <h3 id="modalTitle">Dish Name</h3>
+                <div class="tag-row" id="modalTags" style="margin-top: 8px; margin-bottom: 0;"></div>
             </div>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="recipe-detail-box">
+            <div class="recipe-section-title">Ingredients</div>
+            <ul id="modalIngredients"></ul>
+
+            <div class="recipe-section-title">Preparation Steps</div>
+            <ol id="modalSteps"></ol>
         </div>
     </div>
 </div>
 
 <script>
-var evDatabase = {
-    "Mahindra": [
-        { model: "XUV 3XO EV AX5 (39.4 kWh)", battery: 39.4, range: 285, price: "₹15.01 Lakh" },
-        { model: "XUV 3XO EV AX7L (39.4 kWh)", battery: 39.4, range: 285, price: "₹16.12 Lakh" },
-        { model: "BE 6e (59 kWh)", battery: 59.0, range: 420, price: "₹20.46 Lakh" },
-        { model: "BE 6e (79 kWh)", battery: 79.0, range: 530, price: "₹25.87 Lakh" },
-        { model: "XEV 9e (59 kWh)", battery: 59.0, range: 410, price: "₹21.90 Lakh" },
-        { model: "XEV 9e (79 kWh)", battery: 79.0, range: 520, price: "₹26.50 Lakh" },
-        { model: "XEV 9S 7-Seater (59 kWh)", battery: 59.0, range: 410, price: "₹22.50 Lakh" },
-        { model: "XEV 9S 7-Seater (79 kWh)", battery: 79.0, range: 500, price: "₹27.20 Lakh" },
-        { model: "XUV400 EL Pro (34.5 kWh)", battery: 34.5, range: 250, price: "₹16.49 Lakh" },
-        { model: "XUV400 EL Pro (39.4 kWh)", battery: 39.4, range: 285, price: "₹17.69 Lakh" }
-    ],
-    "Tata Motors": [
-        { model: "Punch EV Smart 30", battery: 30.0, range: 260, price: "₹10.24 Lakh" },
-        { model: "Punch EV Empowered+ 40", battery: 40.0, range: 355, price: "₹13.78 Lakh" },
-        { model: "Tiago EV XE (19.2 kWh)", battery: 19.2, range: 170, price: "₹8.29 Lakh" },
-        { model: "Tiago EV XZ+ (24 kWh)", battery: 24.0, range: 215, price: "₹10.15 Lakh" },
-        { model: "Nexon EV Creative 30", battery: 30.0, range: 240, price: "₹14.99 Lakh" },
-        { model: "Nexon EV Empowered 45", battery: 45.0, range: 350, price: "₹17.19 Lakh" },
-        { model: "Curvv EV 45 kWh", battery: 45.0, range: 340, price: "₹17.99 Lakh" },
-        { model: "Curvv EV 55 kWh", battery: 55.0, range: 410, price: "₹20.19 Lakh" },
-        { model: "Harrier EV (65 kWh)", battery: 65.0, range: 450, price: "₹23.50 Lakh" },
-        { model: "Sierra EV (63 kWh)", battery: 63.0, range: 440, price: "₹22.80 Lakh" }
-    ],
-    "Maruti Suzuki": [
-        { model: "e Vitara (49 kWh)", battery: 49.0, range: 340, price: "₹16.19 Lakh" },
-        { model: "e Vitara (61 kWh)", battery: 61.0, range: 420, price: "₹19.49 Lakh" }
-    ],
-    "MG Motor": [
-        { model: "Comet EV (17.3 kWh)", battery: 17.3, range: 160, price: "₹7.98 Lakh" },
-        { model: "Windsor EV (38 kWh)", battery: 38.0, range: 270, price: "₹14.85 Lakh" },
-        { model: "Windsor EV (52.9 kWh)", battery: 52.9, range: 380, price: "₹16.75 Lakh" },
-        { model: "ZS EV Excite (50.3 kWh)", battery: 50.3, range: 340, price: "₹20.99 Lakh" }
-    ],
-    "Hyundai & Kia": [
-        { model: "Creta Electric (42 kWh)", battery: 42.0, range: 310, price: "₹18.50 Lakh" },
-        { model: "Creta Electric (51.4 kWh)", battery: 51.4, range: 380, price: "₹21.20 Lakh" },
-        { model: "Ioniq 5 (72.6 kWh)", battery: 72.6, range: 450, price: "₹46.05 Lakh" },
-        { model: "Syros EV (51.4 kWh)", battery: 51.4, range: 390, price: "₹19.90 Lakh" }
-    ],
-    "BYD & Luxury": [
-        { model: "BYD Atto 3 (60.48 kWh)", battery: 60.48, range: 410, price: "₹25.90 Lakh" },
-        { model: "BYD Seal (82.56 kWh)", battery: 82.56, range: 540, price: "₹45.55 Lakh" },
-        { model: "BMW iX1 (64.7 kWh)", battery: 64.7, range: 380, price: "₹49.90 Lakh" }
-    ]
-};
+    // Comprehensive Diabetic-Friendly Indian Recipe Database
+    var database = [
+        // --- BREAKFAST : VEG ---
+        {
+            id: 1,
+            meal: "Breakfast",
+            diet: "Veg",
+            name: "Moong Dal & Vegetable Chilla",
+            gi: "Low GI",
+            calories: "180 kcal",
+            desc: "High protein savory pancake made from split yellow lentils and finely chopped vegetables.",
+            ingredients: [
+                "1 cup Yellow Moong Dal (soaked for 2 hours)",
+                "1/2 cup finely chopped spinach and grated carrots",
+                "1 inch ginger & 1 green chili (chopped)",
+                "1 tsp cumin seeds (jeera)",
+                "Salt to taste",
+                "1 tsp cold-pressed mustard or groundnut oil"
+            ],
+            steps: [
+                "Drain the soaked moong dal and blend into a smooth batter with ginger and green chili.",
+                "Transfer batter to a bowl, mix in chopped spinach, grated carrots, and salt.",
+                "Heat a non-stick pan on medium heat and grease lightly with oil.",
+                "Pour a ladle of batter and spread into a circular pancake.",
+                "Cook on both sides until golden brown and crispy. Serve hot with mint-coriander chutney."
+            ]
+        },
+        {
+            id: 2,
+            meal: "Breakfast",
+            diet: "Veg",
+            name: "Oats & Methi Uttapam",
+            gi: "High Fiber",
+            calories: "210 kcal",
+            desc: "Heart-healthy savory pancakes made with rolled oats and fresh fenugreek leaves.",
+            ingredients: [
+                "1 cup rolled oats (ground to coarse flour)",
+                "1/4 cup besan (gram flour)",
+                "1/2 cup fresh methi (fenugreek) leaves, chopped",
+                "1/2 cup low-fat curd (dahi)",
+                "Chopped onions and tomatoes for topping",
+                "Salt and turmeric powder to taste"
+            ],
+            steps: [
+                "Mix oat flour, besan, curd, and water to form a thick uttapam batter.",
+                "Stir in chopped methi leaves, salt, and turmeric.",
+                "Heat a tawa, pour a small ladle of batter, and top with onions and tomatoes.",
+                "Drizzle a few drops of oil around edges, cover, and cook on medium flame until bottom is golden."
+            ]
+        },
 
-function calculateTNTariffMonthlyBill(monthlyUnits) {
-    if (monthlyUnits <= 0) return 0;
-    var bimonthly = monthlyUnits * 2;
-    var bill = 0;
+        // --- BREAKFAST : NON-VEG ---
+        {
+            id: 3,
+            meal: "Breakfast",
+            diet: "Non-Veg",
+            name: "Masala Vegetable Egg Bhurji",
+            gi: "Low Carb",
+            calories: "220 kcal",
+            desc: "Protein-packed scrambled eggs loaded with fiber-rich onions, tomatoes, and bell peppers.",
+            ingredients: [
+                "3 whole eggs",
+                "1 medium onion, finely chopped",
+                "1 tomato, chopped",
+                "1/2 capsicum (bell pepper), diced",
+                "1/4 tsp turmeric and black pepper powder",
+                "1 tsp cooking oil or ghee",
+                "Fresh coriander leaves"
+            ],
+            steps: [
+                "Heat oil in a pan, sauté chopped onions until translucent.",
+                "Add diced capsicum and tomatoes, cooking until tender.",
+                "Crack eggs directly into the pan, add salt, turmeric, and black pepper.",
+                "Scramble continuously on medium heat until cooked to your preference. Garnish with coriander."
+            ]
+        },
+        {
+            id: 4,
+            meal: "Breakfast",
+            diet: "Non-Veg",
+            name: "Spinach Egg White Omelet",
+            gi: "Low GI",
+            calories: "160 kcal",
+            desc: "Light and fluffy egg white omelet packed with iron-rich sautéed spinach and herbs.",
+            ingredients: [
+                "4 egg whites (1 whole egg optional)",
+                "1 cup fresh spinach leaves, chopped",
+                "1 clove garlic, minced",
+                "Pinch of cumin powder and black pepper",
+                "1 tsp olive oil or cold-pressed oil"
+            ],
+            steps: [
+                "Sauté minced garlic and chopped spinach in a pan with half a teaspoon of oil until wilted.",
+                "Whisk egg whites with black pepper, cumin powder, and a pinch of salt.",
+                "Pour egg whites over the spinach layer in the pan.",
+                "Cook on low heat until set, fold in half, and serve warm."
+            ]
+        },
 
-    if (bimonthly <= 500) {
-        var rem = bimonthly - 200;
-        if (rem > 0) {
-            var b1 = Math.min(rem, 200);
-            bill += b1 * 4.70;
-            rem -= b1;
-        }
-        if (rem > 0) {
-            var b2 = Math.min(rem, 100);
-            bill += b2 * 6.30;
-        }
-    } else {
-        var rem = bimonthly - 100;
-        if (rem > 0) {
-            var b1 = Math.min(rem, 300);
-            bill += b1 * 4.70;
-            rem -= b1;
-        }
-        if (rem > 0) {
-            var b2 = Math.min(rem, 100);
-            bill += b2 * 6.30;
-            rem -= b2;
-        }
-        if (rem > 0) {
-            var b3 = Math.min(rem, 100);
-            bill += b3 * 8.40;
-            rem -= b3;
-        }
-        if (rem > 0) {
-            var b4 = Math.min(rem, 200);
-            bill += b4 * 9.45;
-            rem -= b4;
-        }
-        if (rem > 0) {
-            var b5 = Math.min(rem, 200);
-            bill += b5 * 10.50;
-            rem -= b5;
-        }
-        if (rem > 0) {
-            bill += rem * 11.55;
-        }
-    }
-    return bill / 2;
-}
+        // --- LUNCH : VEG ---
+        {
+            id: 5,
+            meal: "Lunch",
+            diet: "Veg",
+            name: "Lauki Chana Dal Sabzi with Jowar Roti",
+            gi: "Low GI",
+            calories: "320 kcal",
+            desc: "Nutritious bottle gourd and split bengal gram curry paired with wholesome sorghum flatbread.",
+            ingredients: [
+                "1 cup diced lauki (bottle gourd)",
+                "1/4 cup chana dal (soaked)",
+                "1 onion & 1 tomato, chopped",
+                "1/2 tsp turmeric, coriander powder, and garam masala",
+                "2 Jowar rotis",
+                "Side of fresh cucumber and tomato salad"
+            ],
+            steps: [
+                "Pressure cook chana dal and lauki with turmeric and salt for 3 whistles until tender.",
+                "In a pan, sauté onions and tomatoes with spices to form a light masala base.",
+                "Mix the cooked dal-lauki mixture into the masala, simmer for 5 minutes.",
+                "Serve hot with 2 warm jowar rotis and raw salad."
+            ]
+        },
+        {
+            id: 6,
+            meal: "Lunch",
+            diet: "Veg",
+            name: "Palak Paneer with Brown Rice",
+            gi: "Diabetic Friendly",
+            calories: "350 kcal",
+            desc: "Cottage cheese cubes simmered in a smooth, spiced spinach gravy with unpolished brown rice.",
+            ingredients: [
+                "200g low-fat paneer cubes",
+                "2 cups fresh spinach leaves (blanched & pureed)",
+                "1 onion, 1 tomato paste",
+                "1 tsp garlic-ginger paste",
+                "1/2 cup cooked brown rice",
+                "1 tsp ghee or mustard oil"
+            ],
+            steps: [
+                "Blanch spinach leaves and blend into a smooth green puree.",
+                "Heat ghee in a pan, sauté ginger-garlic paste and onion paste until golden.",
+                "Add tomato paste and spices (cumin, coriander, pinch of garam masala).",
+                "Stir in spinach puree and paneer cubes, simmer for 5 minutes. Serve with brown rice."
+            ]
+        },
 
-function updateSubModels() {
-    var brandSelect = document.getElementById('brandSelect');
-    var modelSelect = document.getElementById('modelSelect');
-    if (!brandSelect || !modelSelect) return;
+        // --- LUNCH : NON-VEG ---
+        {
+            id: 7,
+            meal: "Lunch",
+            diet: "Non-Veg",
+            name: "Homestyle Chicken Curry with Multigrain Roti",
+            gi: "Low Glycemic",
+            calories: "380 kcal",
+            desc: "Lean chicken breast cooked in a light onion-tomato gravy with minimal oil, paired with multigrain rotis.",
+            ingredients: [
+                "150g boneless chicken breast, cubed",
+                "1 onion & 1 tomato, finely chopped",
+                "1 tsp ginger-garlic paste",
+                "1/2 tsp turmeric, red chili powder, coriander powder",
+                "2 Multigrain rotis (wheat + ragi + besan)"
+            ],
+            steps: [
+                "Heat oil in a pan, sauté ginger-garlic paste and chopped onions until golden brown.",
+                "Add tomatoes and spice powders, cooking until oil separates slightly.",
+                "Add chicken cubes and sear well, then add 1/2 cup water, cover, and simmer until tender.",
+                "Serve hot alongside 2 warm multigrain rotis."
+            ]
+        },
+        {
+            id: 8,
+            meal: "Lunch",
+            diet: "Non-Veg",
+            name: "Baked Fish Curry with Quinoa / Brown Rice",
+            gi: "Heart & Sugar Friendly",
+            calories: "340 kcal",
+            desc: "Omega-3 rich fish fillet simmered in a tangy tamarind and tomato broth.",
+            ingredients: [
+                "200g firm fish fillets (seer fish or rohu)",
+                "1 tomato and small lemon-sized tamarind extract",
+                "1/2 cup sliced shallots (small onions)",
+                "1/2 tsp mustard seeds, fenugreek seeds, and curry leaves",
+                "1/2 cup cooked brown rice"
+            ],
+            steps: [
+                "Sauté mustard seeds, fenugreek seeds, curry leaves, and shallots in 1 tsp oil.",
+                "Add tomato pulp, turmeric, coriander, and diluted tamarind extract; boil into a gravy.",
+                "Gently drop in fish fillets, cover, and simmer for 8-10 minutes until flaky.",
+                "Serve warm over a portion of brown rice."
+            ]
+        },
 
-    var selectedBrand = brandSelect.value;
-    modelSelect.innerHTML = '';
+        // --- DINNER : VEG ---
+        {
+            id: 9,
+            meal: "Dinner",
+            diet: "Veg",
+            name: "Methi Dal Palak Soup & Stir-Fried Veggies",
+            gi: "Very Low Carb",
+            calories: "220 kcal",
+            desc: "Light, soothing lentil soup blended with fenugreek and spinach greens, served with sautéed vegetables.",
+            ingredients: [
+                "1/3 cup yellow moong dal",
+                "1 cup mixed chopped greens (methi and palak)",
+                "1/2 tsp cumin seeds and garlic cloves",
+                "1 cup mixed stir-fried broccoli, beans, and carrots"
+            ],
+            steps: [
+                "Pressure cook moong dal, chopped greens, turmeric, and garlic with 2 cups of water.",
+                "Temper with cumin seeds in a few drops of ghee.",
+                "Lightly stir-fry broccoli, beans, and carrots with black pepper and salt.",
+                "Enjoy together as a light, blood-sugar stable evening meal."
+            ]
+        },
+        {
+            id: 10,
+            meal: "Dinner",
+            diet: "Veg",
+            name: "Stuffed Bhindi (Okra) with Phulkas",
+            gi: "Low GI",
+            calories: "260 kcal",
+            desc: "Tender okra slit and stuffed with aromatic roasted spices, cooked with minimal oil.",
+            ingredients: [
+                "200g fresh tender bhindi, slit lengthwise",
+                "Spices for stuffing: 1 tsp fennel powder, 1 tsp coriander powder, pinch of amchur, turmeric, and salt",
+                "1 tsp mustard or peanut oil",
+                "2 whole wheat phulkas"
+            ],
+            steps: [
+                "Mix all dry spice powders in a bowl.",
+                "Stuff the spice mixture gently inside the slit okra pods.",
+                "Heat oil in a pan, arrange stuffed bhindi, cover, and cook on low heat, turning occasionally until tender.",
+                "Serve with 2 light phulkas."
+            ]
+        },
 
-    if (evDatabase[selectedBrand]) {
-        for (var i = 0; i < evDatabase[selectedBrand].length; i++) {
-            var option = document.createElement('option');
-            option.value = i;
-            option.textContent = evDatabase[selectedBrand][i].model;
-            modelSelect.appendChild(option);
-        }
-    }
-    runCalculation();
-}
-
-function initApp() {
-    var brandSelect = document.getElementById('brandSelect');
-    if (!brandSelect) return;
-    
-    brandSelect.innerHTML = '';
-    for (var brand in evDatabase) {
-        var option = document.createElement('option');
-        option.value = brand;
-        option.textContent = brand;
-        brandSelect.appendChild(option);
-    }
-    
-    brandSelect.value = "Mahindra";
-    updateSubModels();
-}
-
-function runCalculation() {
-    var kmEl = document.getElementById('monthlyKm');
-    var fuelPriceEl = document.getElementById('fuelPrice');
-    var fuelMileageEl = document.getElementById('fuelMileage');
-    var brandSelect = document.getElementById('brandSelect');
-    var modelSelect = document.getElementById('modelSelect');
-
-    if (!kmEl || !fuelPriceEl || !fuelMileageEl || !brandSelect || !modelSelect) return;
-
-    var monthlyKm = parseFloat(kmEl.value) || 0;
-    var fuelPrice = parseFloat(fuelPriceEl.value) || 0;
-    var fuelMileage = parseFloat(fuelMileageEl.value) || 1;
-
-    var brand = brandSelect.value;
-    var modelIdx = modelSelect.value;
-
-    if (!evDatabase[brand] || !evDatabase[brand][modelIdx]) return;
-    var selectedCar = evDatabase[brand][modelIdx];
-
-    var kwhPerKm = selectedCar.battery / selectedCar.range;
-
-    document.getElementById('specInfo').innerHTML = 
-        '<strong>' + selectedCar.model + '</strong><br>' +
-        'Coimbatore On-Road: <span style="color:var(--primary); font-weight:700;">' + selectedCar.price + '</span><br>' +
-        'Battery: ' + selectedCar.battery + ' kWh | Range: ~' + selectedCar.range + ' km';
-
-    var monthlyKwhNeeded = monthlyKm * kwhPerKm;
-    var evMonthlyCost = calculateTNTariffMonthlyBill(monthlyKwhNeeded);
-    var effectiveRatePerUnit = monthlyKwhNeeded > 0 ? (evMonthlyCost / monthlyKwhNeeded) : 0;
-
-    var fuelMonthlyCost = (monthlyKm / fuelMileage) * fuelPrice;
-    var monthlyNetSavings = fuelMonthlyCost - evMonthlyCost;
-    var annualNetSavings = monthlyNetSavings * 12;
-
-    document.getElementById('monthlyUnits').textContent = monthlyKwhNeeded.toFixed(1) + ' kWh';
-    document.getElementById('dynamicRate').textContent = '₹' + effectiveRatePerUnit.toFixed(2) + ' / unit';
-    document.getElementById('evCost').textContent = '₹' + Math.round(evMonthlyCost).toLocaleString('en-IN');
-    document.getElementById('fuelCost').textContent = '₹' + Math.round(fuelMonthlyCost).toLocaleString('en-IN');
-    
-    var yearlySavingsEl = document.getElementById('yearlySavings');
-    if (annualNetSavings >= 0) {
-        yearlySavingsEl.style.color = "var(--success)";
-        yearlySavingsEl.textContent = '₹' + Math.round(annualNetSavings).toLocaleString('en-IN');
-    } else {
-        yearlySavingsEl.style.color = "#ef4444";
-        yearlySavingsEl.textContent = '- ₹' + Math.round(Math.abs(annualNetSavings)).toLocaleString('en-IN');
-    }
-
-    var maxTarget = Math.max(annualNetSavings * 5, 1);
-    var horizonHtml = '';
-    var milestones = ["Year 1 Recovery", "Year 2 Growth", "Year 3 Horizon", "Year 4 Scale", "Year 5 Milestone"];
-
-    for (var year = 1; year <= 5; year++) {
-        var totalSavings = annualNetSavings * year;
-        var percent = Math.max(Math.min((totalSavings / maxTarget) * 100, 100), 4);
-        var formattedSavings = totalSavings >= 0 ? '₹' + Math.round(totalSavings).toLocaleString('en-IN') : '- ₹' + Math.round(Math.abs(totalSavings)).toLocaleString('en-IN');
-
-        horizonHtml += 
-            '<div class="horizon-item">' +
-                '<div class="horizon-header">' +
-                    '<div><span class="horizon-title">Yr ' + year + '</span> &nbsp;<span class="horizon-badge">' + milestones[year - 1] + '</span></div>' +
-                    '<span class="horizon-value">' + formattedSavings + '</span>' +
-                '</div>' +
-                '<div class="progress-track">' +
-                    '<div class="progress-fill" style="width: ' + percent + '%;"></div>' +
-                '</div>' +
-            '</div>';
-    }
-    document.getElementById('visualHorizon').innerHTML = horizonHtml;
-}
-
-initApp();
-</script>
-
-</body>
-</html>
+        // --- DINNER : NON-VEG ---
+        {
+            id: 11,
+            meal: "Dinner",
+            diet: "Non-Veg",
+            name: "Grilled Herb Chicken Breast & Salad",
+            gi: "Zero Sugar Spike",
+            calories: "290 kcal",
+            desc: "Tender marinated chicken breast pan-grilled with herbs and served with a crisp cucumber-tomato salad.",
+            ingredients: [
+                "150g chicken breast",
+                "1 tsp lemon juice, black pepper, crushed garlic, and dried oregano",
+                "1 tsp olive oil",
+                "Large bowl 
